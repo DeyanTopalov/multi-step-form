@@ -2,30 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+/* Install Prettier for auto class sorting */
+/* [1] npm install -D prettier-plugin-tailwindcss */
+/* [2] create .prettierrc.json in the project root (dont forget the . in the name)*/
+/* [3] add: 
+    {
+        "plugins": ["prettier-plugin-tailwindcss"]
+      } */
+/* [4] If it is not working - first try relaunching VS code */
 
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
+/* CSS Variables based on project design */

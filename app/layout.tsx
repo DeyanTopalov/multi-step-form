@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { ubuntu } from "./ui/fonts";
+import "@styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +14,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={`${ubuntu.className} grid h-svh w-svw place-items-center gap-0 bg-green-200 text-left text-lg antialiased md:h-screen md:w-full`}
+      >
+        <main className="grid h-svh w-svw place-items-center px-4 md:max-w-[90rem] md:px-10">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
