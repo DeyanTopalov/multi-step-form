@@ -75,6 +75,7 @@ export const FormCard = () => {
   const {
     register,
     trigger,
+    getValues,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
@@ -107,6 +108,8 @@ export const FormCard = () => {
       console.log("Validation failed. Staying on the current step.");
       console.log(errors);
     }
+
+    console.log("fields are: ", getValues(["name", "email", "phoneNumber"]));
   };
 
   const handlePrevStep = () => {
@@ -115,6 +118,8 @@ export const FormCard = () => {
     }
     setCurrentStep((prevStep) => prevStep - 1);
   };
+
+  const formValues = getValues(validFields);
 
   const onSubmit = (data: TTestSchema) => {
     console.log(data);
@@ -207,6 +212,15 @@ export const FormCard = () => {
             </div>
           </section>
         )}
+        {/* Step 4 */}
+        {currentStep === 4 && (
+          <section>
+            <p>{getValues("name")}</p>
+            <p>{getValues("email")}</p>
+            <p>{formValues}</p>
+          </section>
+        )}
+
         <Button
           type="submit"
           className="hover:bg-grey-900 w-full cursor-pointer bg-green-600 font-bold"
@@ -234,6 +248,11 @@ export const FormCard = () => {
     </div>
   );
 };
+
+// add logic for step 4 - review of inputs
+// Build the real schema
+// add all inputs & steps
+// add styles
 
 //! Backup logic
 // const handleNextStep = async () => {
