@@ -1,6 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TTestSchema, testSchema } from "@lib/schema";
 
 const steps = [
   {
@@ -35,7 +40,10 @@ const steps = [
 
 export const FormNav = ({ currentStep }: { currentStep: number }) => {
   return (
-    <nav aria-label="Progress" className="rounded-lg bg-blue-300 p-4">
+    <nav
+      aria-label="Progress"
+      className="grid-span-1 rounded-lg bg-blue-300 p-4"
+    >
       <ol role="list" className="grid gap-4">
         {steps.map((step, index) => (
           <li key={step.id} className="rounded-lg bg-slate-300 px-6 py-2">
@@ -58,6 +66,16 @@ export const FormNav = ({ currentStep }: { currentStep: number }) => {
 };
 
 export const FormCard = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    control,
+  } = useForm<TTestSchema>({
+    resolver: zodResolver(testSchema),
+  });
+
   const [currentStep, setCurrentStep] = useState(1);
 
   console.log("current step is: ", currentStep);
@@ -78,8 +96,53 @@ export const FormCard = () => {
   };
 
   return (
-    <div>
+    <div className="grid grid-cols-2 gap-2">
       <FormNav currentStep={currentStep} />
+      <form className="grid gap-4">
+        {/* Step 1 */}
+        {currentStep === 1 && (
+          <section>
+            <div>
+              <Label htmlFor="name" className="text-base font-normal">
+                Name
+              </Label>
+              <Input id="name" type="text" placeholder="e.g. Stephen King" />
+            </div>
+          </section>
+        )}
+
+        {/* Step 2 */}
+        {currentStep === 2 && (
+          <section>
+            <div>
+              <Label htmlFor="email" className="text-base font-normal">
+                Email Address
+              </Label>
+              <Input
+                id="email"
+                type="text"
+                placeholder="e.g. stephenking@lorem.com"
+              />
+            </div>
+          </section>
+        )}
+
+        {/* Step 3 */}
+        {currentStep === 3 && (
+          <section>
+            <div>
+              <Label htmlFor="phoneNumber" className="text-base font-normal">
+                Phone Number
+              </Label>
+              <Input
+                id="phoneNumber"
+                type="number"
+                placeholder="e.g. +1 234 567 890"
+              />
+            </div>
+          </section>
+        )}
+      </form>
       <div className="mt-4 flex items-center gap-4">
         <button
           onClick={handlePrevStep}
