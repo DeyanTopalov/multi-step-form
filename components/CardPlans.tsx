@@ -73,41 +73,33 @@ const CardPlans = () => {
           />
           <div>
             <p className="text-lg font-bold">{plan.name}</p>
-            <p className="text-sm font-normal">{plan.priceYearly}</p>
-            <p className="text-sm font-normal">{plan.promoYearly}</p>
+            <p className="text-sm font-normal">
+              {billingCycle === "monthly"
+                ? plan.priceMonthly
+                : plan.priceYearly}
+            </p>
+            {billingCycle === "yearly" && (
+              <p className="text-sm font-normal">{plan.promoYearly}</p>
+            )}
           </div>
         </Label>
       ))}
-      <div>
-        <div className="mt-6 flex items-center justify-center">
-          <span className="mr-2">Monthly</span>
-          <div className="relative mr-2 inline-block w-12 select-none align-middle transition duration-200 ease-in">
-            <input
-              type="checkbox"
-              name="toggle"
-              id="toggle"
-              checked={billingCycle === "yearly"}
-              onChange={handleBillingCycleChange}
-              className="toggle-checkbox absolute block h-6 w-6 cursor-pointer appearance-none rounded-full border-4 bg-white"
-            />
-            <label
-              htmlFor="toggle"
-              className="toggle-label block h-6 cursor-pointer overflow-hidden rounded-full bg-gray-300"
-            ></label>
-          </div>
-          <span className="ml-2">Yearly</span>
-        </div>
-        <style jsx>{`
-          .toggle-checkbox:checked {
-            right: 0;
-            border-color: #2563eb; /* Blue-500 */
-          }
-          .toggle-checkbox:checked + .toggle-label {
-            background-color: #2563eb; /* Blue-500 */
-          }
-        `}</style>
-      </div>
-      <Switch value={billingCycle} onCheckedChange={handleBillingCycleChange} />
+      <Label
+        htmlFor="billingCycle"
+        className="mt-2 flex items-center justify-between gap-2"
+      >
+        <p>
+          <span>Monthly</span>
+        </p>
+        <Switch
+          id="billingCycle"
+          value={billingCycle}
+          onCheckedChange={handleBillingCycleChange}
+        />
+        <p>
+          <span>Yearly</span>
+        </p>
+      </Label>
     </div>
   );
 };
