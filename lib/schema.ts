@@ -7,3 +7,5 @@ export const testSchema = z.object({
 });
 
 export type TTestSchema = z.infer<typeof testSchema>;
+
+// z.object with plans and add-ons as object containing the name, price & subscriptionPlan

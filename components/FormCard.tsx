@@ -7,42 +7,9 @@ import { Button } from "./ui/button";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TTestSchema, testSchema } from "@lib/schema";
+import { steps } from "@lib/utils";
 
 const validFields: Array<keyof TTestSchema> = ["name", "email", "phoneNumber"];
-const steps = [
-  {
-    id: "Step 1",
-    name: "Your info",
-    title: "Personal info",
-    description: "Please provide your name, email address, and phone number.",
-    fields: ["name", "email", "phoneNumber"] as const,
-  },
-  {
-    id: "Step 2",
-    name: "Select plan",
-    title: "Select your plan",
-    description: "You have the option of monthly or yearly billing.",
-    fields: ["Arcade", "Advanced", "Pro"] as const,
-  },
-  {
-    id: "Step 3",
-    name: "Add-ons",
-    title: "Pick add-ons",
-    description: "Add-ons help enhance your gaming experience.",
-    fields: [
-      "Online service",
-      "Larger storage",
-      "Customizable profile",
-    ] as const,
-  },
-  {
-    id: "Step 4",
-    name: "Summary",
-    title: "Finishing up",
-    description: "Double-check everything looks OK before confirming.",
-    fields: [] as const,
-  },
-];
 
 export const FormNav = ({ currentStep }: { currentStep: number }) => {
   return (

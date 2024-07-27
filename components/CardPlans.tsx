@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Switch } from "./ui/switch";
+import { plans } from "@lib/utils";
 import Image from "next/image";
 
 const CardPlans = () => {
@@ -22,68 +23,45 @@ const CardPlans = () => {
     );
   };
 
-  const plans = [
-    {
-      name: "Arcade",
-      priceMonthly: "$9/mo",
-      promoMonthly: "",
-      priceYearly: "$90/yr",
-      promoYearly: "2 months free",
-      image: "icon-arcade.svg",
-    },
-    {
-      name: "Advanced",
-      priceMonthly: "$12/mo",
-      promoMonthly: "",
-      priceYearly: "$120/yr",
-      promoYearly: "2 months free",
-      image: "icon-advanced.svg",
-    },
-    {
-      name: "Pro",
-      priceMonthly: "$15/mo",
-      promoMonthly: "",
-      priceYearly: "$150/yr",
-      promoYearly: "2 months free",
-      image: "icon-pro.svg",
-    },
-  ];
-
   return (
-    <div className="wrapper">
-      {plans.map((plan) => (
-        <Label
-          key={plan.name}
-          className={`flex h-[160px] w-[138px] cursor-pointer flex-col justify-between rounded-lg border px-4 pb-4 pt-5 ${selectedPlan === plan.name ? "border-green-400 bg-blue-200" : "border-gray-400 bg-red-200"}`}
-        >
-          <Input
-            type="radio"
-            name="plan"
-            value={plan.name}
-            checked={selectedPlan === plan.name}
-            onChange={handlePlanChange}
-            className="hidden"
-          />
-          <Image
-            src={plan.image}
-            width={40}
-            height={40}
-            alt={plan.name}
-            className="size-10 rounded-full"
-          />
-          <div>
-            <p className="text-lg font-bold">{plan.name}</p>
-            <p className="text-sm font-normal">
-              {billingCycle === "monthly"
-                ? plan.priceMonthly
-                : plan.priceYearly}
-            </p>
-            {billingCycle === "yearly" && (
-              <p className="text-sm font-normal">{plan.promoYearly}</p>
-            )}
-          </div>
-        </Label>
-      ))}
+    <div className="">
+      <h1>Select your plan</h1>
+      <h2>You have the option of monthly or yearly billing</h2>
+      <div className="flex w-full max-w-[28.125rem] items-center justify-between gap-4">
+        {plans.map((plan) => (
+          <Label
+            key={plan.name}
+            className={`flex h-[160px] w-[138px] cursor-pointer flex-col justify-between rounded-lg border px-4 pb-4 pt-5 ${selectedPlan === plan.name ? "border-green-400 bg-blue-200" : "border-gray-400 bg-red-200"}`}
+          >
+            <Input
+              type="radio"
+              name="plan"
+              value={plan.name}
+              checked={selectedPlan === plan.name}
+              onChange={handlePlanChange}
+              className="hidden"
+            />
+            <Image
+              src={plan.image}
+              width={40}
+              height={40}
+              alt={plan.name}
+              className="size-10 rounded-full"
+            />
+            <div>
+              <p className="text-lg font-bold">{plan.name}</p>
+              <p className="text-sm font-normal">
+                {billingCycle === "monthly"
+                  ? plan.priceMonthly
+                  : plan.priceYearly}
+              </p>
+              {billingCycle === "yearly" && (
+                <p className="text-sm font-normal">{plan.promoYearly}</p>
+              )}
+            </div>
+          </Label>
+        ))}
+      </div>
       <Label
         htmlFor="billingCycle"
         className="mt-2 flex items-center justify-between gap-2"
