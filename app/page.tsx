@@ -5,9 +5,9 @@ import AddonsCard from "@components/AddonsCard";
 export default function Home() {
   return (
     <section className="w-full">
-      {/* <FormCard /> */}
+      <FormCard />
       {/* <CardPlans /> */}
-      <AddonsCard />
+      {/* <AddonsCard /> */}
     </section>
   );
 }

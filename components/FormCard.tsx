@@ -4,12 +4,22 @@ import { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { Checkbox } from "./ui/checkbox";
+import { Switch } from "./ui/switch";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TTestSchema, testSchema } from "@lib/schema";
-import { steps } from "@lib/utils";
+import { steps, plans, addons } from "@lib/utils";
+import Image from "next/image";
 
-const validFields: Array<keyof TTestSchema> = ["name", "email", "phoneNumber"];
+const validFields: Array<keyof TTestSchema> = [
+  "name",
+  "email",
+  "phoneNumber",
+  "billingPlan",
+  "billingCycle",
+  "selectedAddons",
+];
 
 export const FormNav = ({ currentStep }: { currentStep: number }) => {
   return (
@@ -43,15 +53,21 @@ export const FormCard = () => {
     register,
     trigger,
     getValues,
+    setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    watch,
     control,
   } = useForm<TTestSchema>({
     resolver: zodResolver(testSchema),
   });
 
   const [currentStep, setCurrentStep] = useState(1);
+
+  const selectedPlan = watch("billingPlan", "Arcade");
+  const billingCycle = watch("billingCycle", "monthly");
+  const selectedAddons = watch("selectedAddons", []);
 
   console.log("current step is: ", currentStep);
   console.log("steps are: ", steps.length);
@@ -76,7 +92,17 @@ export const FormCard = () => {
       console.log(errors);
     }
 
-    console.log("fields are: ", getValues(["name", "email", "phoneNumber"]));
+    console.log(
+      "fields are: ",
+      getValues([
+        "name",
+        "email",
+        "phoneNumber",
+        "billingPlan",
+        "billingCycle",
+        "selectedAddons",
+      ]),
+    );
   };
 
   const handlePrevStep = () => {
@@ -84,6 +110,26 @@ export const FormCard = () => {
       return;
     }
     setCurrentStep((prevStep) => prevStep - 1);
+  };
+
+  const handlePlanChange = (value: string) => {
+    setValue("billingPlan", value);
+  };
+
+  const handleBillingCycleChange = () => {
+    const newCycle = billingCycle === "monthly" ? "yearly" : "monthly";
+    setValue("billingCycle", newCycle);
+  };
+
+  const handleAddonChange = (addon: string) => {
+    const currentAddons = getValues("selectedAddons") || [];
+    const isSelected = currentAddons.includes(addon);
+
+    const updatedAddons = isSelected
+      ? currentAddons.filter((item) => item !== addon)
+      : [...currentAddons, addon];
+
+    setValue("selectedAddons", updatedAddons);
   };
 
   const formValues = getValues(validFields);
@@ -121,12 +167,6 @@ export const FormCard = () => {
                 )}
               </div>
             </div>
-          </section>
-        )}
-
-        {/* Step 2 */}
-        {currentStep === 2 && (
-          <section>
             <div>
               <Label htmlFor="email" className="text-base font-normal">
                 Email Address
@@ -148,12 +188,6 @@ export const FormCard = () => {
                 )}
               </div>
             </div>
-          </section>
-        )}
-
-        {/* Step 3 */}
-        {currentStep === 3 && (
-          <section>
             <div>
               <Label htmlFor="phoneNumber" className="text-base font-normal">
                 Phone Number
@@ -176,6 +210,99 @@ export const FormCard = () => {
                   </p>
                 )}
               </div>
+            </div>
+          </section>
+        )}
+
+        {/* Step 2 */}
+        {currentStep === 2 && (
+          <section>
+            <div className="flex w-full max-w-[28.125rem] items-center justify-between gap-4">
+              {plans.map((plan) => (
+                <Label
+                  key={plan.name}
+                  className={`flex h-[160px] w-[138px] cursor-pointer flex-col justify-between rounded-lg border px-4 pb-4 pt-5 ${selectedPlan === plan.name ? "border-green-400 bg-blue-200" : "border-gray-400 bg-red-200"}`}
+                >
+                  <Input
+                    type="radio"
+                    id={`plan-${plan.name}`}
+                    {...register("billingPlan")}
+                    value={plan.name}
+                    checked={selectedPlan === plan.name}
+                    onChange={() => handlePlanChange(plan.name)}
+                    className="hidden"
+                  />
+                  <Image
+                    src={plan.image}
+                    width={40}
+                    height={40}
+                    alt={plan.name}
+                    className="size-10 rounded-full"
+                  />
+                  <div>
+                    <p className="text-lg font-bold">{plan.name}</p>
+                    <p className="text-sm font-normal">
+                      {billingCycle === "monthly"
+                        ? plan.priceMonthly
+                        : plan.priceYearly}
+                    </p>
+                    {billingCycle === "yearly" && (
+                      <p className="text-sm font-normal">{plan.promoYearly}</p>
+                    )}
+                  </div>
+                </Label>
+              ))}
+            </div>
+            <Label
+              htmlFor="billingCycle"
+              className="mt-2 flex items-center justify-between gap-2"
+            >
+              <p>
+                <span>Monthly</span>
+              </p>
+              <Switch
+                id="billingCycle"
+                {...register("billingCycle")}
+                value={billingCycle}
+                checked={billingCycle === "yearly"}
+                onCheckedChange={handleBillingCycleChange}
+              />
+              <p>
+                <span>Yearly</span>
+              </p>
+            </Label>
+          </section>
+        )}
+
+        {/* Step 3 */}
+        {currentStep === 3 && (
+          <section>
+            <div className="grid gap-4">
+              {addons.map((addon) => (
+                <Label
+                  key={addon.title}
+                  className="flex items-center justify-between gap-4 rounded-lg border border-slate-950 px-6 py-[1.125rem]"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <Checkbox
+                      id={`addon-${addon.title}`}
+                      {...register("selectedAddons")}
+                      value={addon.title}
+                      checked={selectedAddons.includes(addon.title)}
+                      onCheckedChange={() => handleAddonChange(addon.title)}
+                    />
+                    <div>
+                      <span>{addon.title}</span>
+                      <p>{addon.description}</p>
+                    </div>
+                  </div>
+                  <span>
+                    {billingCycle === "monthly"
+                      ? addon.priceMonthly
+                      : addon.priceYearly}
+                  </span>
+                </Label>
+              ))}
             </div>
           </section>
         )}
