@@ -49,6 +49,8 @@ export const FormNav = ({ currentStep }: { currentStep: number }) => {
 };
 
 export const FormCard = () => {
+  const defaultPlan = { name: "Arcade", price: 9 };
+  const defaultBillingCycle = "monthly";
   const {
     register,
     trigger,
@@ -61,11 +63,16 @@ export const FormCard = () => {
     control,
   } = useForm<TTestSchema>({
     resolver: zodResolver(testSchema),
+    defaultValues: {
+      billingPlan: defaultPlan,
+      billingCycle: defaultBillingCycle,
+      selectedAddons: [],
+    },
   });
 
   const [currentStep, setCurrentStep] = useState(1);
 
-  const selectedPlan = watch("billingPlan", "Arcade");
+  const selectedPlan = watch("billingPlan", { name: "Arcade", price: 9 });
   const billingCycle = watch("billingCycle", "monthly");
   const selectedAddons = watch("selectedAddons", []);
 
@@ -112,25 +119,49 @@ export const FormCard = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
-  const handlePlanChange = (value: string) => {
-    setValue("billingPlan", value);
+  const handlePlanChange = (plan: (typeof plans)[0]) => {
+    const price =
+      billingCycle === "monthly" ? plan.priceMonthly : plan.priceYearly;
+    setValue("billingPlan", { name: plan.name, price });
   };
 
   const handleBillingCycleChange = () => {
     const newCycle = billingCycle === "monthly" ? "yearly" : "monthly";
     setValue("billingCycle", newCycle);
+
+    // Update the plan price according to the new billing cycle
+    const selectedPlan = getValues("billingPlan");
+    const updatedPrice =
+      newCycle === "monthly"
+        ? plans.find((plan) => plan.name === selectedPlan.name)?.priceMonthly
+        : plans.find((plan) => plan.name === selectedPlan.name)?.priceYearly;
+    if (updatedPrice !== undefined) {
+      setValue("billingPlan", { ...selectedPlan, price: updatedPrice });
+    }
   };
 
-  const handleAddonChange = (addon: string) => {
+  const handleAddonChange = (addon: (typeof addons)[0]) => {
     const currentAddons = getValues("selectedAddons") ?? [];
-    const isSelected = currentAddons.includes(addon);
+    const isSelected = currentAddons.some((item) => item.title === addon.title);
 
     const updatedAddons = isSelected
-      ? currentAddons.filter((item) => item !== addon)
-      : [...currentAddons, addon];
+      ? currentAddons.filter((item) => item.title !== addon.title)
+      : [
+          ...currentAddons,
+          {
+            title: addon.title,
+            price:
+              billingCycle === "monthly"
+                ? addon.priceMonthly
+                : addon.priceYearly,
+          },
+        ];
 
     setValue("selectedAddons", updatedAddons);
   };
+
+  const priceTag = billingCycle === "monthly" ? "/mo" : "/yr";
+
   const formValues = getValues(validFields);
 
   const onSubmit = (data: TTestSchema) => {
@@ -220,15 +251,15 @@ export const FormCard = () => {
               {plans.map((plan) => (
                 <Label
                   key={plan.name}
-                  className={`flex h-[160px] w-[138px] cursor-pointer flex-col justify-between rounded-lg border px-4 pb-4 pt-5 ${selectedPlan === plan.name ? "border-green-400 bg-blue-200" : "border-gray-400 bg-red-200"}`}
+                  className={`flex h-[160px] w-[138px] cursor-pointer flex-col justify-between rounded-lg border px-4 pb-4 pt-5 ${selectedPlan.name === plan.name ? "border-green-400 bg-blue-200" : "border-gray-400 bg-red-200"}`}
                 >
                   <Input
                     type="radio"
                     id={`plan-${plan.name}`}
-                    {...register("billingPlan")}
+                    {...register("billingPlan.name")}
                     value={plan.name}
-                    checked={selectedPlan === plan.name}
-                    onChange={() => handlePlanChange(plan.name)}
+                    checked={selectedPlan.name === plan.name}
+                    onChange={() => handlePlanChange(plan)}
                     className="hidden"
                   />
                   <Image
@@ -242,8 +273,8 @@ export const FormCard = () => {
                     <p className="text-lg font-bold">{plan.name}</p>
                     <p className="text-sm font-normal">
                       {billingCycle === "monthly"
-                        ? formatCurrency(plan.priceMonthly) + "/mo"
-                        : formatCurrency(plan.priceYearly) + "/yr"}
+                        ? formatCurrency(plan.priceMonthly) + priceTag
+                        : formatCurrency(plan.priceYearly) + priceTag}
                     </p>
                     {billingCycle === "yearly" && (
                       <p className="text-sm font-normal">{plan.promoYearly}</p>
@@ -288,8 +319,10 @@ export const FormCard = () => {
                       {...register("selectedAddons")}
                       value="" // need to start with empty value so it's
                       // successfully registered once checked
-                      checked={selectedAddons?.includes(addon.title)}
-                      onCheckedChange={() => handleAddonChange(addon.title)}
+                      checked={selectedAddons?.some(
+                        (a) => a.title === addon.title,
+                      )}
+                      onCheckedChange={() => handleAddonChange(addon)}
                     />
                     <div>
                       <span>{addon.title}</span>
@@ -298,8 +331,8 @@ export const FormCard = () => {
                   </div>
                   <span>
                     {billingCycle === "monthly"
-                      ? formatCurrency(addon.priceMonthly) + "/mo"
-                      : formatCurrency(addon.priceYearly) + "/yr"}
+                      ? formatCurrency(addon.priceMonthly) + priceTag
+                      : formatCurrency(addon.priceYearly) + priceTag}
                   </span>
                 </Label>
               ))}
@@ -312,17 +345,18 @@ export const FormCard = () => {
             <p>{getValues("name")}</p>
             <p>{getValues("email")}</p>
             <p>{getValues("phoneNumber")}</p>
-            <p>{getValues("billingPlan")}</p>
+            <p>{getValues("billingPlan.name")}</p>
+            <p>{getValues("billingPlan.price")}</p>
             <p>{getValues("billingCycle")}</p>
             {getValues("selectedAddons") && (
               <ul>
                 {getValues("selectedAddons")?.map((addon) => (
-                  <li key={addon}>{addon}</li>
+                  <li key={addon.title}>
+                    {addon.title + " " + formatCurrency(addon.price)}
+                  </li>
                 ))}
               </ul>
             )}
-
-            <p>{formValues}</p>
           </section>
         )}
 
@@ -354,9 +388,7 @@ export const FormCard = () => {
   );
 };
 
-// add logic for step 4 - review of inputs
-// Build the real schema
-// add all inputs & steps
+// remove the validFields if unneeded or atleast update the code
 // add styles
 // test
 
