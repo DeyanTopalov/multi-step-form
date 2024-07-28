@@ -9,7 +9,7 @@ import { Switch } from "./ui/switch";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TTestSchema, testSchema } from "@lib/schema";
-import { steps, plans, addons } from "@lib/utils";
+import { steps, plans, addons, formatCurrency } from "@lib/utils";
 import Image from "next/image";
 
 const validFields: Array<keyof TTestSchema> = [
@@ -122,7 +122,7 @@ export const FormCard = () => {
   };
 
   const handleAddonChange = (addon: string) => {
-    const currentAddons = getValues("selectedAddons") || [];
+    const currentAddons = getValues("selectedAddons") ?? [];
     const isSelected = currentAddons.includes(addon);
 
     const updatedAddons = isSelected
@@ -131,7 +131,6 @@ export const FormCard = () => {
 
     setValue("selectedAddons", updatedAddons);
   };
-
   const formValues = getValues(validFields);
 
   const onSubmit = (data: TTestSchema) => {
@@ -243,8 +242,8 @@ export const FormCard = () => {
                     <p className="text-lg font-bold">{plan.name}</p>
                     <p className="text-sm font-normal">
                       {billingCycle === "monthly"
-                        ? plan.priceMonthly
-                        : plan.priceYearly}
+                        ? formatCurrency(plan.priceMonthly) + "/mo"
+                        : formatCurrency(plan.priceYearly) + "/yr"}
                     </p>
                     {billingCycle === "yearly" && (
                       <p className="text-sm font-normal">{plan.promoYearly}</p>
@@ -287,8 +286,9 @@ export const FormCard = () => {
                     <Checkbox
                       id={`addon-${addon.title}`}
                       {...register("selectedAddons")}
-                      value={addon.title}
-                      checked={selectedAddons.includes(addon.title)}
+                      value="" // need to start with empty value so it's
+                      // successfully registered once checked
+                      checked={selectedAddons?.includes(addon.title)}
                       onCheckedChange={() => handleAddonChange(addon.title)}
                     />
                     <div>
@@ -298,8 +298,8 @@ export const FormCard = () => {
                   </div>
                   <span>
                     {billingCycle === "monthly"
-                      ? addon.priceMonthly
-                      : addon.priceYearly}
+                      ? formatCurrency(addon.priceMonthly) + "/mo"
+                      : formatCurrency(addon.priceYearly) + "/yr"}
                   </span>
                 </Label>
               ))}
@@ -311,6 +311,17 @@ export const FormCard = () => {
           <section>
             <p>{getValues("name")}</p>
             <p>{getValues("email")}</p>
+            <p>{getValues("phoneNumber")}</p>
+            <p>{getValues("billingPlan")}</p>
+            <p>{getValues("billingCycle")}</p>
+            {getValues("selectedAddons") && (
+              <ul>
+                {getValues("selectedAddons")?.map((addon) => (
+                  <li key={addon}>{addon}</li>
+                ))}
+              </ul>
+            )}
+
             <p>{formValues}</p>
           </section>
         )}

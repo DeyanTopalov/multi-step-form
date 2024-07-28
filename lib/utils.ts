@@ -43,25 +43,25 @@ export const steps = [
 export const plans = [
   {
     name: "Arcade",
-    priceMonthly: "$9/mo",
+    priceMonthly: 9,
     promoMonthly: "",
-    priceYearly: "$90/yr",
+    priceYearly: 90,
     promoYearly: "2 months free",
     image: "icon-arcade.svg",
   },
   {
     name: "Advanced",
-    priceMonthly: "$12/mo",
+    priceMonthly: 12,
     promoMonthly: "",
-    priceYearly: "$120/yr",
+    priceYearly: 120,
     promoYearly: "2 months free",
     image: "icon-advanced.svg",
   },
   {
     name: "Pro",
-    priceMonthly: "$15/mo",
+    priceMonthly: 15,
     promoMonthly: "",
-    priceYearly: "$150/yr",
+    priceYearly: 150,
     promoYearly: "2 months free",
     image: "icon-pro.svg",
   },
@@ -71,19 +71,23 @@ export const addons = [
   {
     title: "Online service",
     description: "Access to multiplayer games",
-    priceMonthly: "$1/mo",
-    priceYearly: "$10/yr",
+    priceMonthly: 1,
+    priceYearly: 10,
   },
   {
     title: "Larger storage",
     description: "Extra 1TB of cloud save",
-    priceMonthly: "$2/mo",
-    priceYearly: "$20/yr",
+    priceMonthly: 2,
+    priceYearly: 20,
   },
   {
     title: "Customizable profile",
     description: "Custom theme on your profile",
-    priceMonthly: "$2/mo",
-    priceYearly: "$20/yr",
+    priceMonthly: 2,
+    priceYearly: 20,
   },
 ];
+
+export const formatCurrency = (amount: number) => {
+  return "$" + amount.toFixed(0);
+};
