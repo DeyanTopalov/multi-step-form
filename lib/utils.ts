@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const steps = [
+export const steps: Step[] = [
   {
     id: "Step 1",
     name: "Your info",

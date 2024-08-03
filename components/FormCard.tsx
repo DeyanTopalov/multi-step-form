@@ -12,15 +12,6 @@ import { TTestSchema, testSchema } from "@lib/schema";
 import { steps, plans, addons, formatCurrency } from "@lib/utils";
 import Image from "next/image";
 
-const validFields: Array<keyof TTestSchema> = [
-  "name",
-  "email",
-  "phoneNumber",
-  "billingPlan",
-  "billingCycle",
-  "selectedAddons",
-];
-
 export const FormNav = ({ currentStep }: { currentStep: number }) => {
   return (
     <nav
@@ -79,17 +70,18 @@ export const FormCard = () => {
   console.log("current step is: ", currentStep);
   console.log("steps are: ", steps.length);
 
+  type FieldName = keyof TTestSchema;
+  // needed for type safety, so we make sure that only valid fields present in the schema will be passed to the trigger function
   const handleNextStep = async () => {
     if (currentStep === steps.length) {
       return;
     }
 
-    const currentFields = steps[currentStep].fields;
-    const fieldsToValidate = currentFields.filter((field) =>
-      validFields.includes(field as keyof TTestSchema),
-    ) as Array<keyof TTestSchema>;
-
-    const isStepValid = await trigger(fieldsToValidate);
+    const currentFields = steps[currentStep - 1].fields;
+    const isStepValid = await trigger(currentFields as FieldName[], {
+      shouldFocus: true,
+    });
+    // added shouldFocus: true to focus on the field with error
 
     if (isStepValid) {
       console.log("Validation passed. Moving to the next step.");
@@ -162,8 +154,6 @@ export const FormCard = () => {
 
   const priceTag = billingCycle === "monthly" ? "/mo" : "/yr";
 
-  const formValues = getValues(validFields);
-
   const onSubmit = (data: TTestSchema) => {
     console.log(data);
     reset();
@@ -176,6 +166,10 @@ export const FormCard = () => {
         {/* Step 1 */}
         {currentStep === 1 && (
           <section>
+            <div>
+              <h1>{steps[currentStep - 1].title}</h1>
+              <p>{steps[currentStep - 1].description}</p>
+            </div>
             <div>
               <Label htmlFor="name" className="text-base font-normal">
                 Name
@@ -247,6 +241,10 @@ export const FormCard = () => {
         {/* Step 2 */}
         {currentStep === 2 && (
           <section>
+            <div>
+              <h2>{steps[currentStep - 1].title}</h2>
+              <p>{steps[currentStep - 1].description}</p>
+            </div>
             <div className="flex w-full max-w-[28.125rem] items-center justify-between gap-4">
               {plans.map((plan) => (
                 <Label
@@ -307,6 +305,10 @@ export const FormCard = () => {
         {/* Step 3 */}
         {currentStep === 3 && (
           <section>
+            <div>
+              <h2>{steps[currentStep - 1].title}</h2>
+              <p>{steps[currentStep - 1].description}</p>
+            </div>
             <div className="grid gap-4">
               {addons.map((addon) => (
                 <Label
@@ -342,6 +344,10 @@ export const FormCard = () => {
         {/* Step 4 */}
         {currentStep === 4 && (
           <section>
+            <div>
+              <h2>{steps[currentStep - 1].title}</h2>
+              <p>{steps[currentStep - 1].description}</p>
+            </div>
             <p>{getValues("name")}</p>
             <p>{getValues("email")}</p>
             <p>{getValues("phoneNumber")}</p>
