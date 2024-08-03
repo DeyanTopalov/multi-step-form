@@ -15,9 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${ubuntu.className} grid h-svh w-svw place-items-center gap-0 bg-green-200 text-left text-lg antialiased md:h-screen md:w-full`}
+        className={`${ubuntu.className} bg-clr-magnolia grid h-svh w-svw place-items-center gap-0 text-left text-lg antialiased md:h-screen md:w-full`}
       >
-        <main className="grid h-svh w-svw place-items-center px-4 md:max-w-[90rem] md:px-10">
+        <main className="grid h-svh w-svw md:max-w-[90rem] md:place-items-center md:px-10">
           {children}
         </main>
       </body>

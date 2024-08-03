@@ -11,5 +11,5 @@ type Step = {
   name: string;
   title: string;
   description: string;
-  fields: Array<keyof TTestSchema>;
+  fields: Array<keyof TFormtSchema>;
 };

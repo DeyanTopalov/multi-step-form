@@ -8,28 +8,39 @@ import { Checkbox } from "./ui/checkbox";
 import { Switch } from "./ui/switch";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TTestSchema, testSchema } from "@lib/schema";
+import { TFormSchema, formSchema } from "@lib/schema";
 import { steps, plans, addons, formatCurrency } from "@lib/utils";
 import Image from "next/image";
+import { NavBackground } from "@lib/icons";
 
 export const FormNav = ({ currentStep }: { currentStep: number }) => {
   return (
     <nav
       aria-label="Progress"
-      className="grid-span-1 rounded-lg bg-blue-300 p-4"
+      className="relative h-[10.75rem] w-full md:h-[35.5rem] md:max-w-[17.125rem] md:overflow-hidden md:rounded-lg"
     >
-      <ol role="list" className="grid gap-4">
+      <div className="absolute inset-x-0 top-0 -z-10 h-full w-full object-cover md:inset-y-0 md:left-0">
+        <NavBackground />
+      </div>
+      <ol
+        role="list"
+        className="mt-8 flex items-center justify-center gap-4 md:mt-10 md:flex-col md:items-start md:gap-8 md:pl-8"
+      >
         {steps.map((step, index) => (
-          <li key={step.id} className="rounded-lg bg-slate-300 px-6 py-2">
-            <div className="flex items-center justify-start gap-6">
+          <li key={step.id} className="">
+            <div className="flex items-center justify-start md:gap-4">
               <div
-                className={` ${index + 1 === currentStep ? "bg-green-500" : ""} flex size-10 items-center justify-center rounded-full border border-slate-950`}
+                className={` ${index + 1 === currentStep ? "bg-clr-light-blue text-clr-marine-blue border-clr-light-blue" : "border-white text-white"} flex size-10 items-center justify-center rounded-full border font-bold transition-all duration-300 ease-in-out`}
               >
                 {index + 1}
               </div>
-              <div className="grid">
-                <p>{step.id}</p>
-                <h2>{step.name}</h2>
+              <div className="hidden md:grid">
+                <p className="text-clr-light-blue text-sm font-normal uppercase">
+                  {step.id}
+                </p>
+                <h2 className="text-sm font-bold uppercase text-white">
+                  {step.name}
+                </h2>
               </div>
             </div>
           </li>
@@ -52,8 +63,8 @@ export const FormCard = () => {
     reset,
     watch,
     control,
-  } = useForm<TTestSchema>({
-    resolver: zodResolver(testSchema),
+  } = useForm<TFormSchema>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       billingPlan: defaultPlan,
       billingCycle: defaultBillingCycle,
@@ -70,7 +81,7 @@ export const FormCard = () => {
   console.log("current step is: ", currentStep);
   console.log("steps are: ", steps.length);
 
-  type FieldName = keyof TTestSchema;
+  type FieldName = keyof TFormSchema;
   // needed for type safety, so we make sure that only valid fields present in the schema will be passed to the trigger function
   const handleNextStep = async () => {
     if (currentStep === steps.length) {
@@ -154,15 +165,18 @@ export const FormCard = () => {
 
   const priceTag = billingCycle === "monthly" ? "/mo" : "/yr";
 
-  const onSubmit = (data: TTestSchema) => {
+  const onSubmit = (data: TFormSchema) => {
     console.log(data);
     reset();
   };
 
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid w-full gap-2 md:grid-cols-2">
       <FormNav currentStep={currentStep} />
-      <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 pt-8"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {/* Step 1 */}
         {currentStep === 1 && (
           <section>
@@ -180,6 +194,7 @@ export const FormCard = () => {
                 placeholder="e.g. Stephen King"
                 {...register("name")}
                 aria-describedby="name-error"
+                className="text-base"
               />
               <div
                 id="name-error"
@@ -201,6 +216,7 @@ export const FormCard = () => {
                 placeholder="e.g. stephenking@lorem.com"
                 {...register("email")}
                 aria-describedby="email-error"
+                className="text-base"
               />
               <div
                 id="email-error"
@@ -222,6 +238,7 @@ export const FormCard = () => {
                 placeholder="e.g. +1 234 567 890"
                 {...register("phoneNumber")}
                 aria-describedby="phoneNumber-error"
+                className="text-base"
               />
               <div
                 id="phoneNumber-error"

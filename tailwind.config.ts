@@ -1,12 +1,12 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -18,6 +18,17 @@ const config = {
       },
     },
     extend: {
+      colors: {
+        "clr-marine-blue": "hsla(var(--marine-blue))",
+        "clr-purplish-blue": "hsla(var(--purplish-blue))",
+        "clr-pastel-blue": "hsla(var(--pastel-blue))",
+        "clr-light-blue": "hsla(var(--light-blue))",
+        "clr-strawberry": "hsla(var(--strawberry))",
+        "clr-cool-gray": "hsla(var(--cool-gray))",
+        "clr-light-gray": "hsla(var(--light-gray))",
+        "clr-magnolia": "hsla(var(--magnolia))",
+        "clr-alabaster": "hsla(var(--alabaster))",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -35,6 +46,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
