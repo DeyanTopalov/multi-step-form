@@ -180,12 +180,19 @@ export const FormCard = () => {
         {/* Step 1 */}
         {currentStep === 1 && (
           <section>
-            <div>
-              <h1>{steps[currentStep - 1].title}</h1>
-              <p>{steps[currentStep - 1].description}</p>
+            <div className="mb-[1.375rem] grid gap-3">
+              <h1 className="text-clr-marine-blue text-2xl font-bold md:text-[2rem]">
+                {steps[currentStep - 1].title}
+              </h1>
+              <p className="text-clr-cool-gray">
+                {steps[currentStep - 1].description}
+              </p>
             </div>
             <div>
-              <Label htmlFor="name" className="text-base font-normal">
+              <Label
+                htmlFor="name"
+                className="text-clr-marine-blue text-xs font-normal md:text-sm"
+              >
                 Name
               </Label>
               <Input
@@ -194,20 +201,25 @@ export const FormCard = () => {
                 placeholder="e.g. Stephen King"
                 {...register("name")}
                 aria-describedby="name-error"
-                className="text-base"
+                className={`text-clr-marine-blue focus-visible:ring-clr-purplish-blue mt-1 text-base font-medium ${errors.name ? "ring-clr-strawberry ring-2 ring-offset-2" : ""} `}
               />
               <div
                 id="name-error"
                 aria-live="polite"
-                className="flex h-6 w-full items-center justify-start"
+                className="mt-[0.375rem] flex h-4 w-full items-center justify-end md:h-6"
               >
                 {errors.name && (
-                  <p className="text-xs text-red-500">{errors.name.message}</p>
+                  <p className="text-clr-strawberry text-sm font-bold">
+                    {errors.name.message}
+                  </p>
                 )}
               </div>
             </div>
             <div>
-              <Label htmlFor="email" className="text-base font-normal">
+              <Label
+                htmlFor="email"
+                className="text-clr-marine-blue text-xs font-normal md:text-sm"
+              >
                 Email Address
               </Label>
               <Input
@@ -216,20 +228,25 @@ export const FormCard = () => {
                 placeholder="e.g. stephenking@lorem.com"
                 {...register("email")}
                 aria-describedby="email-error"
-                className="text-base"
+                className={`text-clr-marine-blue focus-visible:ring-clr-purplish-blue mt-1 text-base font-medium ${errors.email ? "ring-clr-strawberry ring-2 ring-offset-2" : ""} `}
               />
               <div
                 id="email-error"
                 aria-live="polite"
-                className="flex h-6 w-full items-center justify-start"
+                className="mt-[0.375rem] flex h-4 w-full items-center justify-end md:h-6"
               >
                 {errors.email && (
-                  <p className="text-xs text-red-500">{errors.email.message}</p>
+                  <p className="text-clr-strawberry text-sm font-bold">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
             </div>
             <div>
-              <Label htmlFor="phoneNumber" className="text-base font-normal">
+              <Label
+                htmlFor="phoneNumber"
+                className="text-clr-marine-blue text-xs font-normal md:text-sm"
+              >
                 Phone Number
               </Label>
               <Input
@@ -238,15 +255,15 @@ export const FormCard = () => {
                 placeholder="e.g. +1 234 567 890"
                 {...register("phoneNumber")}
                 aria-describedby="phoneNumber-error"
-                className="text-base"
+                className={`text-clr-marine-blue focus-visible:ring-clr-purplish-blue mt-1 text-base font-medium ${errors.phoneNumber ? "ring-clr-strawberry ring-2 ring-offset-2" : ""} `}
               />
               <div
                 id="phoneNumber-error"
                 aria-live="polite"
-                className="flex h-6 w-full items-center justify-start"
+                className="mt-[0.375rem] flex h-4 w-full items-center justify-end md:h-6"
               >
                 {errors.phoneNumber && (
-                  <p className="text-xs text-red-500">
+                  <p className="text-clr-strawberry text-sm font-bold">
                     {errors.phoneNumber.message}
                   </p>
                 )}
@@ -258,9 +275,13 @@ export const FormCard = () => {
         {/* Step 2 */}
         {currentStep === 2 && (
           <section>
-            <div>
-              <h2>{steps[currentStep - 1].title}</h2>
-              <p>{steps[currentStep - 1].description}</p>
+            <div className="mb-[1.375rem] grid gap-3">
+              <h2 className="text-clr-marine-blue text-2xl font-bold md:text-[2rem]">
+                {steps[currentStep - 1].title}
+              </h2>
+              <p className="text-clr-cool-gray">
+                {steps[currentStep - 1].description}
+              </p>
             </div>
             <div className="flex w-full max-w-[28.125rem] items-center justify-between gap-4">
               {plans.map((plan) => (
@@ -322,9 +343,13 @@ export const FormCard = () => {
         {/* Step 3 */}
         {currentStep === 3 && (
           <section>
-            <div>
-              <h2>{steps[currentStep - 1].title}</h2>
-              <p>{steps[currentStep - 1].description}</p>
+            <div className="mb-[1.375rem] grid gap-3">
+              <h2 className="text-clr-marine-blue text-2xl font-bold md:text-[2rem]">
+                {steps[currentStep - 1].title}
+              </h2>
+              <p className="text-clr-cool-gray">
+                {steps[currentStep - 1].description}
+              </p>
             </div>
             <div className="grid gap-4">
               {addons.map((addon) => (
@@ -361,9 +386,13 @@ export const FormCard = () => {
         {/* Step 4 */}
         {currentStep === 4 && (
           <section>
-            <div>
-              <h2>{steps[currentStep - 1].title}</h2>
-              <p>{steps[currentStep - 1].description}</p>
+            <div className="mb-[1.375rem] grid gap-3">
+              <h2 className="text-clr-marine-blue text-2xl font-bold md:text-[2rem]">
+                {steps[currentStep - 1].title}
+              </h2>
+              <p className="text-clr-cool-gray">
+                {steps[currentStep - 1].description}
+              </p>
             </div>
             <p>{getValues("name")}</p>
             <p>{getValues("email")}</p>
@@ -380,33 +409,43 @@ export const FormCard = () => {
                 ))}
               </ul>
             )}
+
+            <Button
+              type="submit"
+              className="hover:bg-grey-900 w-full cursor-pointer bg-green-600 font-bold"
+              disabled={isSubmitting}
+            >
+              Submit
+            </Button>
           </section>
         )}
 
-        <Button
+        {/* <Button
           type="submit"
           className="hover:bg-grey-900 w-full cursor-pointer bg-green-600 font-bold"
           disabled={isSubmitting}
         >
           Submit
-        </Button>
+        </Button> */}
       </form>
-      <div className="mt-4 flex items-center gap-4">
-        <button
+      <div className="absolute inset-x-0 bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
+        {/* <div className="flex items-center justify-between gap-4 bg-orange-500"> */}
+        <Button
           onClick={handlePrevStep}
-          className="rounded-lg bg-blue-400 px-4 py-2 disabled:bg-red-400"
+          className="rounded-lg bg-blue-400 px-4 py-2 disabled:invisible"
           disabled={currentStep === 1}
         >
           Go Back
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={handleNextStep}
           className="rounded-lg bg-blue-400 px-4 py-2 disabled:bg-red-400"
           disabled={currentStep === steps.length}
         >
           Next Step
-        </button>
+        </Button>
       </div>
+      {/* </div> */}
     </div>
   );
 };
