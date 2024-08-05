@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { Switch } from "./ui/switch";
+import { NavBackground } from "@lib/icons";
+import { steps, plans, addons, formatCurrency } from "@lib/utils";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormSchema, formSchema } from "@lib/schema";
-import { steps, plans, addons, formatCurrency } from "@lib/utils";
-import Image from "next/image";
-import { NavBackground } from "@lib/icons";
 
 export const FormNav = ({ currentStep }: { currentStep: number }) => {
   return (
@@ -419,17 +419,8 @@ export const FormCard = () => {
             </Button>
           </section>
         )}
-
-        {/* <Button
-          type="submit"
-          className="hover:bg-grey-900 w-full cursor-pointer bg-green-600 font-bold"
-          disabled={isSubmitting}
-        >
-          Submit
-        </Button> */}
       </form>
       <div className="absolute inset-x-0 bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
-        {/* <div className="flex items-center justify-between gap-4 bg-orange-500"> */}
         <Button
           onClick={handlePrevStep}
           className="rounded-lg bg-blue-400 px-4 py-2 disabled:invisible"
@@ -445,7 +436,6 @@ export const FormCard = () => {
           Next Step
         </Button>
       </div>
-      {/* </div> */}
     </div>
   );
 };
