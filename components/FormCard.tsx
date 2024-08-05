@@ -174,7 +174,7 @@ export const FormCard = () => {
     <div className="grid w-full gap-2 md:grid-cols-2">
       <FormNav currentStep={currentStep} />
       <form
-        className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 pt-8"
+        className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 py-8 md:mt-0"
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* Step 1 */}
