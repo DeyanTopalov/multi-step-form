@@ -9,7 +9,7 @@ import { Switch } from "./ui/switch";
 import { NavBackground } from "@lib/icons";
 import { steps, plans, addons, formatCurrency } from "@lib/utils";
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormSchema, formSchema } from "@lib/schema";
 
@@ -30,12 +30,12 @@ export const FormNav = ({ currentStep }: { currentStep: number }) => {
           <li key={step.id} className="">
             <div className="flex items-center justify-start md:gap-4">
               <div
-                className={` ${index + 1 === currentStep ? "bg-clr-light-blue text-clr-marine-blue border-clr-light-blue" : "border-white text-white"} flex size-10 items-center justify-center rounded-full border font-bold transition-all duration-300 ease-in-out`}
+                className={` ${index + 1 === currentStep ? "border-clr-light-blue bg-clr-light-blue text-clr-marine-blue" : "border-white text-white"} flex size-10 items-center justify-center rounded-full border font-bold transition-all duration-300 ease-in-out`}
               >
                 {index + 1}
               </div>
               <div className="hidden md:grid">
-                <p className="text-clr-light-blue text-sm font-normal uppercase">
+                <p className="text-sm font-normal uppercase text-clr-light-blue">
                   {step.id}
                 </p>
                 <h2 className="text-sm font-bold uppercase text-white">
@@ -62,7 +62,6 @@ export const FormCard = () => {
     formState: { errors, isSubmitting },
     reset,
     watch,
-    control,
   } = useForm<TFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -181,7 +180,7 @@ export const FormCard = () => {
         {currentStep === 1 && (
           <section>
             <div className="mb-[1.375rem] grid gap-3">
-              <h1 className="text-clr-marine-blue text-2xl font-bold md:text-[2rem]">
+              <h1 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
               </h1>
               <p className="text-clr-cool-gray">
@@ -191,7 +190,7 @@ export const FormCard = () => {
             <div>
               <Label
                 htmlFor="name"
-                className="text-clr-marine-blue text-xs font-normal md:text-sm"
+                className="text-xs font-normal text-clr-marine-blue md:text-sm"
               >
                 Name
               </Label>
@@ -201,7 +200,7 @@ export const FormCard = () => {
                 placeholder="e.g. Stephen King"
                 {...register("name")}
                 aria-describedby="name-error"
-                className={`text-clr-marine-blue focus-visible:ring-clr-purplish-blue mt-1 text-base font-medium ${errors.name ? "ring-clr-strawberry ring-2 ring-offset-2" : ""} `}
+                className={`mt-1 text-base font-medium text-clr-marine-blue focus-visible:ring-clr-purplish-blue ${errors.name ? "ring-2 ring-clr-strawberry ring-offset-2" : ""} `}
               />
               <div
                 id="name-error"
@@ -209,7 +208,7 @@ export const FormCard = () => {
                 className="mt-[0.375rem] flex h-4 w-full items-center justify-end md:h-6"
               >
                 {errors.name && (
-                  <p className="text-clr-strawberry text-sm font-bold">
+                  <p className="text-sm font-bold text-clr-strawberry">
                     {errors.name.message}
                   </p>
                 )}
@@ -218,7 +217,7 @@ export const FormCard = () => {
             <div>
               <Label
                 htmlFor="email"
-                className="text-clr-marine-blue text-xs font-normal md:text-sm"
+                className="text-xs font-normal text-clr-marine-blue md:text-sm"
               >
                 Email Address
               </Label>
@@ -228,7 +227,7 @@ export const FormCard = () => {
                 placeholder="e.g. stephenking@lorem.com"
                 {...register("email")}
                 aria-describedby="email-error"
-                className={`text-clr-marine-blue focus-visible:ring-clr-purplish-blue mt-1 text-base font-medium ${errors.email ? "ring-clr-strawberry ring-2 ring-offset-2" : ""} `}
+                className={`mt-1 text-base font-medium text-clr-marine-blue focus-visible:ring-clr-purplish-blue ${errors.email ? "ring-2 ring-clr-strawberry ring-offset-2" : ""} `}
               />
               <div
                 id="email-error"
@@ -236,7 +235,7 @@ export const FormCard = () => {
                 className="mt-[0.375rem] flex h-4 w-full items-center justify-end md:h-6"
               >
                 {errors.email && (
-                  <p className="text-clr-strawberry text-sm font-bold">
+                  <p className="text-sm font-bold text-clr-strawberry">
                     {errors.email.message}
                   </p>
                 )}
@@ -245,7 +244,7 @@ export const FormCard = () => {
             <div>
               <Label
                 htmlFor="phoneNumber"
-                className="text-clr-marine-blue text-xs font-normal md:text-sm"
+                className="text-xs font-normal text-clr-marine-blue md:text-sm"
               >
                 Phone Number
               </Label>
@@ -255,7 +254,7 @@ export const FormCard = () => {
                 placeholder="e.g. +1 234 567 890"
                 {...register("phoneNumber")}
                 aria-describedby="phoneNumber-error"
-                className={`text-clr-marine-blue focus-visible:ring-clr-purplish-blue mt-1 text-base font-medium ${errors.phoneNumber ? "ring-clr-strawberry ring-2 ring-offset-2" : ""} `}
+                className={`mt-1 text-base font-medium text-clr-marine-blue focus-visible:ring-clr-purplish-blue ${errors.phoneNumber ? "ring-2 ring-clr-strawberry ring-offset-2" : ""} `}
               />
               <div
                 id="phoneNumber-error"
@@ -263,7 +262,7 @@ export const FormCard = () => {
                 className="mt-[0.375rem] flex h-4 w-full items-center justify-end md:h-6"
               >
                 {errors.phoneNumber && (
-                  <p className="text-clr-strawberry text-sm font-bold">
+                  <p className="text-sm font-bold text-clr-strawberry">
                     {errors.phoneNumber.message}
                   </p>
                 )}
@@ -276,7 +275,7 @@ export const FormCard = () => {
         {currentStep === 2 && (
           <section>
             <div className="mb-[1.375rem] grid gap-3">
-              <h2 className="text-clr-marine-blue text-2xl font-bold md:text-[2rem]">
+              <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
               </h2>
               <p className="text-clr-cool-gray">
@@ -344,7 +343,7 @@ export const FormCard = () => {
         {currentStep === 3 && (
           <section>
             <div className="mb-[1.375rem] grid gap-3">
-              <h2 className="text-clr-marine-blue text-2xl font-bold md:text-[2rem]">
+              <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
               </h2>
               <p className="text-clr-cool-gray">
@@ -387,7 +386,7 @@ export const FormCard = () => {
         {currentStep === 4 && (
           <section>
             <div className="mb-[1.375rem] grid gap-3">
-              <h2 className="text-clr-marine-blue text-2xl font-bold md:text-[2rem]">
+              <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
               </h2>
               <p className="text-clr-cool-gray">
