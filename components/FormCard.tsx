@@ -71,7 +71,7 @@ export const FormCard = () => {
     },
   });
 
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(3);
 
   const selectedPlan = watch("billingPlan", { name: "Arcade", price: 9 });
   const billingCycle = watch("billingCycle", "monthly");
@@ -169,9 +169,11 @@ export const FormCard = () => {
     reset();
   };
 
+  // grid w-full gap-6 md:grid-cols-2
   return (
-    <div className="grid w-full gap-6 md:grid-cols-2">
+    <div className="flex h-full w-full flex-col justify-between gap-6 md:grid md:grid-cols-2">
       <FormNav currentStep={currentStep} />
+      {/* with flex due to the footer, the layout on step 3 is sht */}
       <form
         className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 py-8 md:mt-0"
         onSubmit={handleSubmit(onSubmit)}
@@ -305,14 +307,18 @@ export const FormCard = () => {
                     className="size-10 rounded-full"
                   />
                   <div>
-                    <p className="text-lg font-medium">{plan.name}</p>
+                    <p className="text-lg font-medium text-clr-marine-blue">
+                      {plan.name}
+                    </p>
                     <p className="text-sm font-normal text-clr-cool-gray">
                       {billingCycle === "monthly"
                         ? formatCurrency(plan.priceMonthly) + priceTag
                         : formatCurrency(plan.priceYearly) + priceTag}
                     </p>
                     {billingCycle === "yearly" && (
-                      <p className="text-sm font-normal">{plan.promoYearly}</p>
+                      <p className="mt-1 text-xs font-normal text-clr-marine-blue">
+                        {plan.promoYearly}
+                      </p>
                     )}
                   </div>
                 </Label>
@@ -324,7 +330,7 @@ export const FormCard = () => {
             >
               <p>
                 <span
-                  className={`${billingCycle === "monthly" ? "text-clr-marine-blue" : "text-clr-light-gray"} text-sm font-medium`}
+                  className={`${billingCycle === "monthly" ? "text-clr-marine-blue" : "text-clr-cool-gray"} text-sm font-medium`}
                 >
                   Monthly
                 </span>
@@ -362,7 +368,11 @@ export const FormCard = () => {
               {addons.map((addon) => (
                 <Label
                   key={addon.title}
-                  className="flex items-center justify-between gap-4 rounded-lg border border-slate-950 px-6 py-[1.125rem]"
+                  className={`flex h-auto w-full items-center justify-between gap-4 rounded-lg border px-6 py-[1.125rem] ${
+                    selectedAddons?.some((a) => a.title === addon.title)
+                      ? "border-clr-purplish-blue bg-clr-alabaster"
+                      : "border-clr-light-gray bg-transparent"
+                  }`}
                 >
                   <div className="flex items-center justify-between gap-4">
                     <Checkbox
@@ -374,13 +384,18 @@ export const FormCard = () => {
                         (a) => a.title === addon.title,
                       )}
                       onCheckedChange={() => handleAddonChange(addon)}
+                      className="data-[state=checked]:bg-clr-purplish-blue data-[state=checked]:text-white"
                     />
                     <div>
-                      <span>{addon.title}</span>
-                      <p>{addon.description}</p>
+                      <span className="test-sm font-medium text-clr-marine-blue">
+                        {addon.title}
+                      </span>
+                      <p className="mt-2 text-xs font-normal text-clr-cool-gray">
+                        {addon.description}
+                      </p>
                     </div>
                   </div>
-                  <span>
+                  <span className="text-xs font-normal text-clr-purplish-blue">
                     {billingCycle === "monthly"
                       ? formatCurrency(addon.priceMonthly) + priceTag
                       : formatCurrency(addon.priceYearly) + priceTag}
@@ -427,10 +442,13 @@ export const FormCard = () => {
           </section>
         )}
       </form>
-      <div className="fixed inset-x-0 bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
+      {/* fix the spacing beetween the footer and the card. Ex step 2 */}
+
+      {/* fixed inset-x-0 bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 */}
+      <div className="flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
         <Button
           onClick={handlePrevStep}
-          className="rounded-lg bg-blue-400 px-4 py-2 disabled:invisible"
+          className="rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray hover:text-clr-marine-blue disabled:invisible md:text-base"
           disabled={currentStep === 1}
         >
           Go Back
