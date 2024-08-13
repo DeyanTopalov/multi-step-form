@@ -71,7 +71,7 @@ export const FormCard = () => {
     },
   });
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
 
   const selectedPlan = watch("billingPlan", { name: "Arcade", price: 9 });
   const billingCycle = watch("billingCycle", "monthly");
@@ -170,7 +170,7 @@ export const FormCard = () => {
   };
 
   return (
-    <div className="grid w-full gap-2 md:grid-cols-2">
+    <div className="grid w-full gap-6 md:grid-cols-2">
       <FormNav currentStep={currentStep} />
       <form
         className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 py-8 md:mt-0"
@@ -179,7 +179,7 @@ export const FormCard = () => {
         {/* Step 1 */}
         {currentStep === 1 && (
           <section>
-            <div className="mb-[1.375rem] grid gap-3">
+            <div className="mb-6 grid gap-3">
               <h1 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
               </h1>
@@ -274,7 +274,7 @@ export const FormCard = () => {
         {/* Step 2 */}
         {currentStep === 2 && (
           <section>
-            <div className="mb-[1.375rem] grid gap-3">
+            <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
               </h2>
@@ -282,11 +282,11 @@ export const FormCard = () => {
                 {steps[currentStep - 1].description}
               </p>
             </div>
-            <div className="flex w-full max-w-[28.125rem] items-center justify-between gap-4">
+            <div className="flex w-full max-w-[28.125rem] flex-col items-center justify-between gap-3 md:flex-row md:gap-4">
               {plans.map((plan) => (
                 <Label
                   key={plan.name}
-                  className={`flex h-[160px] w-[138px] cursor-pointer flex-col justify-between rounded-lg border px-4 pb-4 pt-5 ${selectedPlan.name === plan.name ? "border-green-400 bg-blue-200" : "border-gray-400 bg-red-200"}`}
+                  className={`flex h-auto w-full cursor-pointer items-center justify-start gap-3 rounded-lg border px-4 pb-4 pt-5 hover:border-clr-purplish-blue md:h-[160px] md:w-[138px] md:flex-col md:justify-between md:gap-0 ${selectedPlan.name === plan.name ? "border-clr-purplish-blue bg-clr-alabaster" : "border-clr-light-gray bg-transparent"}`}
                 >
                   <Input
                     type="radio"
@@ -305,8 +305,8 @@ export const FormCard = () => {
                     className="size-10 rounded-full"
                   />
                   <div>
-                    <p className="text-lg font-bold">{plan.name}</p>
-                    <p className="text-sm font-normal">
+                    <p className="text-lg font-medium">{plan.name}</p>
+                    <p className="text-sm font-normal text-clr-cool-gray">
                       {billingCycle === "monthly"
                         ? formatCurrency(plan.priceMonthly) + priceTag
                         : formatCurrency(plan.priceYearly) + priceTag}
@@ -320,10 +320,14 @@ export const FormCard = () => {
             </div>
             <Label
               htmlFor="billingCycle"
-              className="mt-2 flex items-center justify-between gap-2"
+              className="mt-6 flex items-center justify-between gap-2 rounded-lg bg-clr-alabaster px-14 py-[0.875rem]"
             >
               <p>
-                <span>Monthly</span>
+                <span
+                  className={`${billingCycle === "monthly" ? "text-clr-marine-blue" : "text-clr-light-gray"} text-sm font-medium`}
+                >
+                  Monthly
+                </span>
               </p>
               <Switch
                 id="billingCycle"
@@ -333,7 +337,11 @@ export const FormCard = () => {
                 onCheckedChange={handleBillingCycleChange}
               />
               <p>
-                <span>Yearly</span>
+                <span
+                  className={`${billingCycle === "yearly" ? "text-clr-marine-blue" : "text-clr-light-gray"} text-sm font-medium`}
+                >
+                  Yearly
+                </span>
               </p>
             </Label>
           </section>
@@ -342,7 +350,7 @@ export const FormCard = () => {
         {/* Step 3 */}
         {currentStep === 3 && (
           <section>
-            <div className="mb-[1.375rem] grid gap-3">
+            <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
               </h2>
@@ -385,7 +393,7 @@ export const FormCard = () => {
         {/* Step 4 */}
         {currentStep === 4 && (
           <section>
-            <div className="mb-[1.375rem] grid gap-3">
+            <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
               </h2>
@@ -419,7 +427,7 @@ export const FormCard = () => {
           </section>
         )}
       </form>
-      <div className="absolute inset-x-0 bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
+      <div className="fixed inset-x-0 bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
         <Button
           onClick={handlePrevStep}
           className="rounded-lg bg-blue-400 px-4 py-2 disabled:invisible"
@@ -429,7 +437,7 @@ export const FormCard = () => {
         </Button>
         <Button
           onClick={handleNextStep}
-          className="rounded-lg bg-blue-400 px-4 py-2 disabled:bg-red-400"
+          className="cursor-pointer rounded-lg bg-clr-marine-blue px-4 py-2 hover:bg-clr-purplish-blue disabled:bg-red-400"
           disabled={currentStep === steps.length}
         >
           Next Step
