@@ -71,7 +71,7 @@ export const FormCard = () => {
     },
   });
 
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(4);
 
   const selectedPlan = watch("billingPlan", { name: "Arcade", price: 9 });
   const billingCycle = watch("billingCycle", "monthly");
@@ -397,8 +397,8 @@ export const FormCard = () => {
                   </div>
                   <span className="text-xs font-normal text-clr-purplish-blue">
                     {billingCycle === "monthly"
-                      ? formatCurrency(addon.priceMonthly) + priceTag
-                      : formatCurrency(addon.priceYearly) + priceTag}
+                      ? "+" + formatCurrency(addon.priceMonthly) + priceTag
+                      : "+" + formatCurrency(addon.priceYearly) + priceTag}
                   </span>
                 </Label>
               ))}
@@ -416,12 +416,50 @@ export const FormCard = () => {
                 {steps[currentStep - 1].description}
               </p>
             </div>
+            <div className="wrapper grid w-full rounded-lg bg-clr-alabaster px-4 py-4 md:px-6">
+              <div className="flexwraper_for_the_plan flex w-full items-center justify-between">
+                <div className="grid place-items-start">
+                  <p>
+                    {getValues("billingPlan.name") +
+                      " (" +
+                      getValues("billingCycle") +
+                      ")"}
+                  </p>
+                  <Button className="rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray underline hover:text-clr-marine-blue md:text-base">
+                    Change
+                  </Button>
+                </div>
+                <p>
+                  {formatCurrency(getValues("billingPlan.price")) + priceTag}
+                </p>
+              </div>
+              <div className="for_addons">
+                {getValues("selectedAddons") && (
+                  <ul>
+                    {getValues("selectedAddons")?.map((addon) => (
+                      <li
+                        key={addon.title}
+                        className="flex items-center justify-between"
+                      >
+                        <p>{addon.title}</p>
+                        <span>
+                          {"+" + formatCurrency(addon.price) + priceTag}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+            <p>
+              {"Total value " +
+                getValues("billingPlan.price") +
+                getValues("selectedAddons.0.price")}
+            </p>
             <p>{getValues("name")}</p>
             <p>{getValues("email")}</p>
             <p>{getValues("phoneNumber")}</p>
             <p>{getValues("billingPlan.name")}</p>
-            <p>{getValues("billingPlan.price")}</p>
-            <p>{getValues("billingCycle")}</p>
             {getValues("selectedAddons") && (
               <ul>
                 {getValues("selectedAddons")?.map((addon) => (
@@ -467,4 +505,3 @@ export const FormCard = () => {
 
 // remove the validFields if unneeded or atleast update the code
 // add styles
-// test
