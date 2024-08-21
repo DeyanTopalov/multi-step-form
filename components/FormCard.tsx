@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { Switch } from "./ui/switch";
 import { NavBackground } from "@lib/icons";
-import { steps, plans, addons, formatCurrency } from "@lib/utils";
+import { steps, plans, addons, formatCurrency, sum } from "@lib/utils";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -70,6 +70,8 @@ export const FormCard = () => {
       selectedAddons: [],
     },
   });
+
+  console.log("SUM IS >>>   ", sum("amazing"));
 
   const [currentStep, setCurrentStep] = useState(4);
 

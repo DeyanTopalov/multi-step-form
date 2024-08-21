@@ -91,3 +91,15 @@ export const addons = [
 export const formatCurrency = (amount: number) => {
   return "$" + amount.toFixed(0);
 };
+
+export const sum = (...args: (string | number)[]): number => {
+  // if (args.length < 2) {
+  //   throw new Error("Sum function requires at least two arguments.");
+  // }
+
+  // return args.reduce<number>((acc, curr) => acc + Number(curr), 0);
+  return args.reduce<number>((acc, curr) => {
+    const num = Number(curr);
+    return isNaN(num) ? acc : acc + num;
+  }, 0);
+};
