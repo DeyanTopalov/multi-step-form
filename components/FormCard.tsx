@@ -71,8 +71,6 @@ export const FormCard = () => {
     },
   });
 
-  console.log("SUM IS >>>   ", sum("amazing"));
-
   const [currentStep, setCurrentStep] = useState(4);
 
   const selectedPlan = watch("billingPlan", { name: "Arcade", price: 9 });
@@ -453,24 +451,21 @@ export const FormCard = () => {
                 )}
               </div>
             </div>
-            <p>
-              {"Total value " +
-                getValues("billingPlan.price") +
-                getValues("selectedAddons.0.price")}
+            <p className="mt-6 flex items-center justify-between px-4 text-sm text-clr-cool-gray md:px-6">
+              {billingCycle === "monthly"
+                ? "Total (per month)"
+                : "Total (per year)"}
+              <span className="text-base font-bold text-clr-purplish-blue md:text-xl">
+                {formatCurrency(
+                  sum(
+                    getValues("billingPlan.price"),
+                    ...(getValues("selectedAddons")?.map(
+                      (addon) => addon.price,
+                    ) || []),
+                  ),
+                ) + priceTag}
+              </span>
             </p>
-            <p>{getValues("name")}</p>
-            <p>{getValues("email")}</p>
-            <p>{getValues("phoneNumber")}</p>
-            <p>{getValues("billingPlan.name")}</p>
-            {getValues("selectedAddons") && (
-              <ul>
-                {getValues("selectedAddons")?.map((addon) => (
-                  <li key={addon.title}>
-                    {addon.title + " " + formatCurrency(addon.price)}
-                  </li>
-                ))}
-              </ul>
-            )}
 
             <Button
               type="submit"
