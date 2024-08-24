@@ -171,16 +171,19 @@ export const FormCard = () => {
 
   // grid w-full gap-6 md:grid-cols-2
   return (
-    <div className="flex h-full w-full flex-col justify-between gap-6 md:grid md:grid-cols-2">
+    <div className="relative flex h-full w-full flex-col md:grid md:grid-cols-2">
+      {/* className="flex h-full w-full flex-col justify-between gap-6 md:grid md:grid-cols-2" */}
       <FormNav currentStep={currentStep} />
       {/* with flex due to the footer, the layout on step 3 is sht */}
       <form
-        className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 py-8 md:mt-0"
+        className="mb-10"
         onSubmit={handleSubmit(onSubmit)}
+
+        // className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 py-8 md:mt-0"
       >
         {/* Step 1 */}
         {currentStep === 1 && (
-          <section>
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mt-0">
             <div className="mb-6 grid gap-3">
               <h1 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -275,7 +278,7 @@ export const FormCard = () => {
 
         {/* Step 2 */}
         {currentStep === 2 && (
-          <section>
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mt-0">
             <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -355,7 +358,7 @@ export const FormCard = () => {
 
         {/* Step 3 */}
         {currentStep === 3 && (
-          <section>
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mt-0">
             <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -368,7 +371,7 @@ export const FormCard = () => {
               {addons.map((addon) => (
                 <Label
                   key={addon.title}
-                  className={`flex h-auto w-full items-center justify-between gap-4 rounded-lg border px-6 py-[1.125rem] ${
+                  className={`flex h-auto w-full items-center justify-between gap-4 rounded-lg border px-4 py-[1.125rem] md:px-6 ${
                     selectedAddons?.some((a) => a.title === addon.title)
                       ? "border-clr-purplish-blue bg-clr-alabaster"
                       : "border-clr-light-gray bg-transparent"
@@ -406,8 +409,9 @@ export const FormCard = () => {
           </section>
         )}
         {/* Step 4 */}
+        {/* -mt-[4.5rem] */}
         {currentStep === 4 && (
-          <section>
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mt-0">
             <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -417,15 +421,16 @@ export const FormCard = () => {
               </p>
             </div>
             <div className="wrapper grid w-full rounded-lg bg-clr-alabaster px-4 py-4 md:px-6">
-              <div className="flexwraper_for_the_plan flex w-full items-center justify-between">
+              <div className="flexwraper_for_the_plan flex w-full items-center justify-between border-b border-clr-light-gray pb-3 md:pb-6">
                 <div className="grid place-items-start">
-                  <p>
-                    {getValues("billingPlan.name") +
-                      " (" +
-                      getValues("billingCycle") +
-                      ")"}
+                  <p className="text-base font-medium text-clr-marine-blue">
+                    {getValues("billingPlan.name")}
+                    <span className="capitalize">{` (${billingCycle})`}</span>
                   </p>
-                  <Button className="rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray underline hover:text-clr-marine-blue md:text-base">
+                  <Button
+                    className="rounded-lg bg-transparent px-0 py-2 text-sm font-normal text-clr-cool-gray underline hover:bg-transparent hover:text-clr-purplish-blue md:text-base"
+                    onClick={() => setCurrentStep(2)}
+                  >
                     Change
                   </Button>
                 </div>
@@ -433,16 +438,18 @@ export const FormCard = () => {
                   {formatCurrency(getValues("billingPlan.price")) + priceTag}
                 </p>
               </div>
-              <div className="for_addons">
+              <div className="for_addons pt-3 md:pt-4">
                 {getValues("selectedAddons") && (
-                  <ul>
+                  <ul className="grid gap-3 md:gap-4">
                     {getValues("selectedAddons")?.map((addon) => (
                       <li
                         key={addon.title}
                         className="flex items-center justify-between"
                       >
-                        <p>{addon.title}</p>
-                        <span>
+                        <p className="text-sm text-clr-cool-gray">
+                          {addon.title}
+                        </p>
+                        <span className="text-sm text-clr-marine-blue">
                           {"+" + formatCurrency(addon.price) + priceTag}
                         </span>
                       </li>
@@ -467,20 +474,36 @@ export const FormCard = () => {
               </span>
             </p>
 
-            <Button
+            {/* <Button
               type="submit"
               className="hover:bg-grey-900 w-full cursor-pointer bg-green-600 font-bold"
               disabled={isSubmitting}
             >
               Submit
-            </Button>
+            </Button> */}
           </section>
         )}
+        <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
+          <Button
+            onClick={handlePrevStep}
+            className="hover:bg-transperent rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray hover:text-clr-marine-blue disabled:invisible md:text-base"
+            disabled={currentStep === 1}
+          >
+            Go Back
+          </Button>
+          <Button
+            onClick={handleNextStep}
+            className="cursor-pointer rounded-lg bg-clr-marine-blue px-4 py-2 hover:bg-clr-purplish-blue disabled:bg-red-400"
+            disabled={currentStep === steps.length}
+          >
+            Next Step
+          </Button>
+        </div>
       </form>
       {/* fix the spacing beetween the footer and the card. Ex step 2 */}
 
       {/* fixed inset-x-0 bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 */}
-      <div className="flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
+      {/* <div className="flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
         <Button
           onClick={handlePrevStep}
           className="rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray hover:text-clr-marine-blue disabled:invisible md:text-base"
@@ -495,11 +518,13 @@ export const FormCard = () => {
         >
           Next Step
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
 
+// addons styles step 4
+// border step 4
 // remove the validFields if unneeded or atleast update the code
 // add styles
 // test
