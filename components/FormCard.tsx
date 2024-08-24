@@ -24,11 +24,11 @@ export const FormNav = ({ currentStep }: { currentStep: number }) => {
       </div>
       <ol
         role="list"
-        className="mt-8 flex items-center justify-center gap-4 md:mt-10 md:flex-col md:items-start md:gap-8 md:pl-8"
+        className="z-20 mt-8 flex items-center justify-center gap-4 md:mt-10 md:flex-col md:items-start md:gap-8 md:pl-8"
       >
         {steps.map((step, index) => (
           <li key={step.id} className="">
-            <div className="flex items-center justify-start md:gap-4">
+            <div className="z-20 flex items-center justify-start md:gap-4">
               <div
                 className={` ${index + 1 === currentStep ? "border-clr-light-blue bg-clr-light-blue text-clr-marine-blue" : "border-white text-white"} flex size-10 items-center justify-center rounded-full border font-bold transition-all duration-300 ease-in-out`}
               >
@@ -171,12 +171,13 @@ export const FormCard = () => {
 
   // grid w-full gap-6 md:grid-cols-2
   return (
-    <div className="relative flex h-full w-full flex-col md:grid md:grid-cols-2">
+    <div className="relative flex h-full w-full flex-col md:flex-row md:justify-between md:gap-1">
+      {/* relative flex h-full w-full flex-col md:grid md:grid-cols-2 */}
       {/* className="flex h-full w-full flex-col justify-between gap-6 md:grid md:grid-cols-2" */}
       <FormNav currentStep={currentStep} />
       {/* with flex due to the footer, the layout on step 3 is sht */}
       <form
-        className="mb-10"
+        className="md:transparent mb-10 md:relative md:mb-0 md:w-full md:max-w-[450px]"
         onSubmit={handleSubmit(onSubmit)}
 
         // className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 py-8 md:mt-0"
@@ -411,7 +412,7 @@ export const FormCard = () => {
         {/* Step 4 */}
         {/* -mt-[4.5rem] */}
         {currentStep === 4 && (
-          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mt-0">
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mx-0 md:translate-y-0 md:bg-transparent md:px-0 md:py-0">
             <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -420,7 +421,8 @@ export const FormCard = () => {
                 {steps[currentStep - 1].description}
               </p>
             </div>
-            <div className="wrapper grid w-full rounded-lg bg-clr-alabaster px-4 py-4 md:px-6">
+            <div className="wrapper grid w-full rounded-lg bg-red-500 px-4 py-4 md:px-6">
+              {/* bg-clr-alabaster */}
               <div className="flexwraper_for_the_plan flex w-full items-center justify-between border-b border-clr-light-gray pb-3 md:pb-6">
                 <div className="grid place-items-start">
                   <p className="text-base font-medium text-clr-marine-blue">
@@ -483,7 +485,7 @@ export const FormCard = () => {
             </Button> */}
           </section>
         )}
-        <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
+        <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 md:w-full md:max-w-[450px] md:bg-yellow-200">
           <Button
             onClick={handlePrevStep}
             className="hover:bg-transperent rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray hover:text-clr-marine-blue disabled:invisible md:text-base"
