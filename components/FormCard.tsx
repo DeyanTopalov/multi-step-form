@@ -504,7 +504,6 @@ export const FormCard = () => {
       </form>
       {/* fix the spacing beetween the footer and the card. Ex step 2 */}
 
-      {/* fixed inset-x-0 bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 */}
       {/* <div className="flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
         <Button
           onClick={handlePrevStep}
