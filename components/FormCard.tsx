@@ -6,7 +6,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { Switch } from "./ui/switch";
-import { NavBackground } from "@lib/icons";
+import { NavBackground, NavBgMobile, NavBgDesktop } from "@lib/icons";
 import { steps, plans, addons, formatCurrency, sum } from "@lib/utils";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -19,22 +19,34 @@ export const FormNav = ({ currentStep }: { currentStep: number }) => {
       aria-label="Progress"
       className="relative h-[10.75rem] w-full md:h-[35.5rem] md:max-w-[17.125rem] md:overflow-hidden md:rounded-lg"
     >
-      <div className="absolute inset-x-0 top-0 -z-10 h-full w-full object-cover md:inset-y-0 md:left-0">
+      {/* Buggy Nextjs img, not conditionally rednering based on screen size */}
+      <div className="absolute inset-x-0 top-0 -z-10 h-full w-full bg-fixed object-cover md:inset-y-0 md:left-0">
         <NavBackground />
       </div>
+
+      {/* Fix - workaround by conditionally rendering the div holding the img */}
+      {/* <div className="absolute inset-x-0 top-0 -z-10 block h-full w-full object-cover md:inset-y-0 md:left-0 md:hidden">
+        <NavBgMobile />
+      </div>
+      <div className="absolute inset-x-0 top-0 -z-10 hidden h-full w-full object-cover md:inset-y-0 md:left-0 md:block">
+        <NavBgDesktop />
+      </div> */}
       <ol
         role="list"
-        className="z-20 mt-8 flex items-center justify-center gap-4 md:mt-10 md:flex-col md:items-start md:gap-8 md:pl-8"
+        className="mt-8 flex items-center justify-center gap-4 md:mt-10 md:flex-col md:items-start md:gap-8 md:pl-8"
       >
+        <div className="absolute inset-x-0 top-0 z-0 h-full w-full bg-fixed object-cover md:inset-y-0 md:left-0">
+          <NavBackground />
+        </div>
         {steps.map((step, index) => (
           <li key={step.id} className="">
             <div className="z-20 flex items-center justify-start md:gap-4">
               <div
-                className={` ${index + 1 === currentStep ? "border-clr-light-blue bg-clr-light-blue text-clr-marine-blue" : "border-white text-white"} flex size-10 items-center justify-center rounded-full border font-bold transition-all duration-300 ease-in-out`}
+                className={` ${index + 1 === currentStep ? "border-clr-light-blue bg-clr-light-blue text-clr-marine-blue" : "border-white text-white"} z-20 flex size-10 items-center justify-center rounded-full border font-bold transition-all duration-300 ease-in-out`}
               >
                 {index + 1}
               </div>
-              <div className="hidden md:grid">
+              <div className="z-20 hidden md:grid">
                 <p className="text-sm font-normal uppercase text-clr-light-blue">
                   {step.id}
                 </p>
@@ -484,7 +496,7 @@ export const FormCard = () => {
             </Button> */}
           </section>
         )}
-        <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 md:w-full md:max-w-[450px] md:bg-yellow-200">
+        <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 md:w-full md:max-w-[450px] md:bg-transparent">
           <Button
             onClick={handlePrevStep}
             className="hover:bg-transperent rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray hover:text-clr-marine-blue disabled:invisible md:text-base"

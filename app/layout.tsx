@@ -15,12 +15,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${ubuntu.className} relative grid h-svh w-svw place-items-center gap-0 bg-clr-magnolia text-left text-base antialiased md:h-screen md:w-full`}
+        className={`${ubuntu.className} relative -z-50 grid h-svh w-svw place-items-center gap-0 bg-clr-magnolia text-left text-base antialiased md:h-screen md:w-full`}
       >
         <main className="grid h-full w-svw md:max-w-[90rem] md:place-items-center md:px-10">
           {children}
         </main>
-        {/* <div className="bottom-0 w-full bg-green-400">Test</div> */}
       </body>
     </html>
   );
