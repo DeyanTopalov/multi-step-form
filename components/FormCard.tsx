@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormSchema, formSchema } from "@lib/schema";
+import { set } from "zod";
 
 export const FormNav = ({ currentStep }: { currentStep: number }) => {
   return (
@@ -19,18 +20,9 @@ export const FormNav = ({ currentStep }: { currentStep: number }) => {
       aria-label="Progress"
       className="relative h-[10.75rem] w-full md:h-[35.5rem] md:max-w-[17.125rem] md:overflow-hidden md:rounded-lg"
     >
-      {/* Buggy Nextjs img, not conditionally rednering based on screen size */}
       <div className="absolute inset-x-0 top-0 -z-10 h-full w-full bg-fixed object-cover md:inset-y-0 md:left-0">
         <NavBackground />
       </div>
-
-      {/* Fix - workaround by conditionally rendering the div holding the img */}
-      {/* <div className="absolute inset-x-0 top-0 -z-10 block h-full w-full object-cover md:inset-y-0 md:left-0 md:hidden">
-        <NavBgMobile />
-      </div>
-      <div className="absolute inset-x-0 top-0 -z-10 hidden h-full w-full object-cover md:inset-y-0 md:left-0 md:block">
-        <NavBgDesktop />
-      </div> */}
       <ol
         role="list"
         className="mt-8 flex items-center justify-center gap-4 md:mt-10 md:flex-col md:items-start md:gap-8 md:pl-8"
@@ -83,14 +75,14 @@ export const FormCard = () => {
     },
   });
 
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const selectedPlan = watch("billingPlan", { name: "Arcade", price: 9 });
   const billingCycle = watch("billingCycle", "monthly");
   const selectedAddons = watch("selectedAddons", []);
 
-  console.log("current step is: ", currentStep);
-  console.log("steps are: ", steps.length);
+  // console.log("current step is: ", currentStep);
+  // console.log("steps are: ", steps.length);
 
   type FieldName = keyof TFormSchema;
   // needed for type safety, so we make sure that only valid fields present in the schema will be passed to the trigger function
@@ -177,22 +169,17 @@ export const FormCard = () => {
   const priceTag = billingCycle === "monthly" ? "/mo" : "/yr";
 
   const onSubmit = (data: TFormSchema) => {
-    console.log(data);
+    console.log("form data is: ", data);
     reset();
+    setCurrentStep(1);
   };
 
-  // grid w-full gap-6 md:grid-cols-2
   return (
     <div className="relative flex h-full w-full flex-col md:flex-row md:justify-between md:gap-1">
-      {/* relative flex h-full w-full flex-col md:grid md:grid-cols-2 */}
-      {/* className="flex h-full w-full flex-col justify-between gap-6 md:grid md:grid-cols-2" */}
       <FormNav currentStep={currentStep} />
-      {/* with flex due to the footer, the layout on step 3 is sht */}
       <form
         className="md:transparent mb-10 md:relative md:mb-0 md:w-full md:max-w-[28.125rem]"
         onSubmit={handleSubmit(onSubmit)}
-
-        // className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 py-8 md:mt-0"
       >
         {/* Step 1 */}
         {currentStep === 1 && (
@@ -486,19 +473,12 @@ export const FormCard = () => {
                 ) + priceTag}
               </span>
             </p>
-
-            {/* <Button
-              type="submit"
-              className="hover:bg-grey-900 w-full cursor-pointer bg-green-600 font-bold"
-              disabled={isSubmitting}
-            >
-              Submit
-            </Button> */}
           </section>
         )}
         <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 md:w-full md:max-w-[28.125rem] md:bg-transparent">
           <Button
             onClick={handlePrevStep}
+            type="button"
             className="hover:bg-transperent rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray hover:text-clr-marine-blue disabled:invisible md:text-base"
             disabled={currentStep === 1}
           >
@@ -506,37 +486,26 @@ export const FormCard = () => {
           </Button>
           <Button
             onClick={handleNextStep}
-            className="cursor-pointer rounded-lg bg-clr-marine-blue px-4 py-2 hover:bg-clr-purplish-blue disabled:bg-red-400"
+            type="button"
+            className="cursor-pointer rounded-lg bg-clr-marine-blue px-4 py-2 hover:bg-clr-purplish-blue disabled:hidden"
             disabled={currentStep === steps.length}
           >
             Next Step
           </Button>
+          <Button
+            type="submit"
+            className={` ${currentStep < 4 ? "hidden" : "block"} cursor-pointer rounded-lg bg-clr-purplish-blue px-6 py-2 font-medium hover:bg-clr-purplish-blue/75 disabled:bg-red-600 md:px-8`}
+            disabled={isSubmitting}
+          >
+            Confirm
+          </Button>
         </div>
       </form>
-      {/* fix the spacing beetween the footer and the card. Ex step 2 */}
-
-      {/* <div className="flex h-[4.5rem] w-full items-center justify-between bg-white px-4">
-        <Button
-          onClick={handlePrevStep}
-          className="rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray hover:text-clr-marine-blue disabled:invisible md:text-base"
-          disabled={currentStep === 1}
-        >
-          Go Back
-        </Button>
-        <Button
-          onClick={handleNextStep}
-          className="cursor-pointer rounded-lg bg-clr-marine-blue px-4 py-2 hover:bg-clr-purplish-blue disabled:bg-red-400"
-          disabled={currentStep === steps.length}
-        >
-          Next Step
-        </Button>
-      </div> */}
     </div>
   );
 };
 
-// addons styles step 4
-// border step 4
-// remove the validFields if unneeded or atleast update the code
-// add styles
+// add the Success component BUT include an X (Close) button to revert to Step 1. > Therefore update the onSubmit logic
+// Add transition / animation to each section rendering
+
 // test
