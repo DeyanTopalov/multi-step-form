@@ -35,7 +35,7 @@ export const FormNav = ({ currentStep }: { currentStep: number }) => {
         role="list"
         className="mt-8 flex items-center justify-center gap-4 md:mt-10 md:flex-col md:items-start md:gap-8 md:pl-8"
       >
-        <div className="absolute inset-x-0 top-0 z-0 h-full w-full bg-fixed object-cover md:inset-y-0 md:left-0">
+        <div className="absolute inset-x-0 top-0 z-0 h-full w-full object-cover md:inset-y-0 md:left-0">
           <NavBackground />
         </div>
         {steps.map((step, index) => (
@@ -189,14 +189,14 @@ export const FormCard = () => {
       <FormNav currentStep={currentStep} />
       {/* with flex due to the footer, the layout on step 3 is sht */}
       <form
-        className="md:transparent mb-10 md:relative md:mb-0 md:w-full md:max-w-[450px]"
+        className="md:transparent mb-10 md:relative md:mb-0 md:w-full md:max-w-[28.125rem]"
         onSubmit={handleSubmit(onSubmit)}
 
         // className="mx-4 -mt-[4.5rem] grid gap-4 rounded-lg bg-white px-6 py-8 md:mt-0"
       >
         {/* Step 1 */}
         {currentStep === 1 && (
-          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mt-0">
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
             <div className="mb-6 grid gap-3">
               <h1 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -291,7 +291,7 @@ export const FormCard = () => {
 
         {/* Step 2 */}
         {currentStep === 2 && (
-          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mt-0">
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
             <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -304,7 +304,7 @@ export const FormCard = () => {
               {plans.map((plan) => (
                 <Label
                   key={plan.name}
-                  className={`flex h-auto w-full cursor-pointer items-center justify-start gap-3 rounded-lg border px-4 pb-4 pt-5 hover:border-clr-purplish-blue md:h-[160px] md:w-[138px] md:flex-col md:justify-between md:gap-0 ${selectedPlan.name === plan.name ? "border-clr-purplish-blue bg-clr-alabaster" : "border-clr-light-gray bg-transparent"}`}
+                  className={`flex h-auto w-full cursor-pointer items-center justify-start gap-3 rounded-lg border px-4 pb-4 pt-5 hover:border-clr-purplish-blue md:h-[10rem] md:w-[8.625rem] md:flex-col md:items-start md:justify-between md:gap-0 ${selectedPlan.name === plan.name ? "border-clr-purplish-blue bg-clr-alabaster" : "border-clr-light-gray bg-transparent"}`}
                 >
                   <Input
                     type="radio"
@@ -371,7 +371,7 @@ export const FormCard = () => {
 
         {/* Step 3 */}
         {currentStep === 3 && (
-          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mt-0">
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
             <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -424,7 +424,7 @@ export const FormCard = () => {
         {/* Step 4 */}
         {/* -mt-[4.5rem] */}
         {currentStep === 4 && (
-          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0">
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
             <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -496,7 +496,7 @@ export const FormCard = () => {
             </Button> */}
           </section>
         )}
-        <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 md:w-full md:max-w-[450px] md:bg-transparent">
+        <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 md:w-full md:max-w-[28.125rem] md:bg-transparent">
           <Button
             onClick={handlePrevStep}
             className="hover:bg-transperent rounded-lg bg-transparent px-0 py-2 text-sm font-medium text-clr-cool-gray hover:text-clr-marine-blue disabled:invisible md:text-base"
