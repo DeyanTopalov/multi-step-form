@@ -412,7 +412,7 @@ export const FormCard = () => {
         {/* Step 4 */}
         {/* -mt-[4.5rem] */}
         {currentStep === 4 && (
-          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mx-0 md:translate-y-0 md:bg-transparent md:px-0 md:py-0">
+          <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0">
             <div className="mb-6 grid gap-3">
               <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                 {steps[currentStep - 1].title}
@@ -421,8 +421,7 @@ export const FormCard = () => {
                 {steps[currentStep - 1].description}
               </p>
             </div>
-            <div className="wrapper grid w-full rounded-lg bg-red-500 px-4 py-4 md:px-6">
-              {/* bg-clr-alabaster */}
+            <div className="wrapper grid w-full rounded-lg bg-clr-alabaster px-4 py-4 md:px-6">
               <div className="flexwraper_for_the_plan flex w-full items-center justify-between border-b border-clr-light-gray pb-3 md:pb-6">
                 <div className="grid place-items-start">
                   <p className="text-base font-medium text-clr-marine-blue">
