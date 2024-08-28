@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { CircleCheck } from "lucide-react";
 
 // Buggy Nextjs img, not conditionally rednering based on screen size
 export const NavBackground = () => {
@@ -22,6 +23,7 @@ export const NavBackground = () => {
   );
 };
 
+//Bg workaround due to buggy Image compoonent
 export const NavBgMobile = () => {
   return (
     <Image
@@ -29,7 +31,7 @@ export const NavBgMobile = () => {
       width={375}
       height={172}
       alt="background pattern"
-      className="block h-full w-full object-cover md:hidden"
+      className="h-full w-full object-cover"
     />
   );
 };
@@ -41,7 +43,7 @@ export const NavBgDesktop = () => {
       width={274}
       height={568}
       alt="background pattern"
-      className="hidden h-full w-full object-cover md:block"
+      className="h-full w-full object-cover"
     />
   );
 };
