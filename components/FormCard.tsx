@@ -12,7 +12,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormSchema, formSchema } from "@lib/schema";
-import { set } from "zod";
 
 export const FormNav = ({ currentStep }: { currentStep: number }) => {
   return (
