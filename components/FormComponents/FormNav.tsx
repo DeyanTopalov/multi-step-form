@@ -1,5 +1,5 @@
-import { NavBgMobile, NavBgDesktop } from "@lib/icons";
-import { steps } from "@lib/utils";
+import { NavBgMobile, NavBgDesktop } from "../../lib/icons";
+import { steps } from "../../lib/utils";
 
 const FormNav = ({ currentStep }: { currentStep: number }) => {
   return (

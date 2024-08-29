@@ -38,10 +38,25 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "slide-r-to-l": {
+          from: {
+            transform: "translateX(100%)",
+          },
+          to: {
+            transform: "translateX(0)",
+          },
+        },
+        fadein: {
+          "0%": { opacity: "0" },
+          "50%": { opacity: "0.3" },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slide-r-to-l": "slide-r-to-l 0.4s ease-in-out",
+        fadein: "fadein 350ms ease-in ",
       },
     },
   },

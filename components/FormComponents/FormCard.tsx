@@ -1,18 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { Checkbox } from "./ui/checkbox";
-import { Switch } from "./ui/switch";
-import FormSuccessScreen from "./FormComponents/FormSuccessScreen";
-import FormNav from "./FormComponents/FormNav";
-import { steps, plans, addons, formatCurrency, sum } from "@lib/utils";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
+import { Switch } from "../ui/switch";
+import FormSuccessScreen from "./FormSuccessScreen";
+import FormNav from "./FormNav";
+import { steps, plans, addons, formatCurrency, sum } from "../../lib/utils";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TFormSchema, formSchema } from "@lib/schema";
+import { TFormSchema, formSchema } from "../../lib/schema";
 
 export const FormCard = () => {
   const defaultPlan = { name: "Arcade", price: 9 };
@@ -135,7 +135,7 @@ export const FormCard = () => {
         >
           {/* Step 1 */}
           {currentStep === 1 && (
-            <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
+            <section className="animate-fadein mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
               <div className="mb-6 grid gap-3">
                 <h1 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                   {steps[currentStep - 1].title}
@@ -230,7 +230,7 @@ export const FormCard = () => {
 
           {/* Step 2 */}
           {currentStep === 2 && (
-            <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
+            <section className="animate-fadein mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
               <div className="mb-6 grid gap-3">
                 <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                   {steps[currentStep - 1].title}
@@ -310,7 +310,7 @@ export const FormCard = () => {
 
           {/* Step 3 */}
           {currentStep === 3 && (
-            <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
+            <section className="animate-fadein mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
               <div className="mb-6 grid gap-3">
                 <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                   {steps[currentStep - 1].title}
@@ -362,7 +362,7 @@ export const FormCard = () => {
           )}
           {/* Step 4 */}
           {currentStep === 4 && (
-            <section className="mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
+            <section className="animate-fadein mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
               <div className="mb-6 grid gap-3">
                 <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                   {steps[currentStep - 1].title}
@@ -461,7 +461,7 @@ export const FormCard = () => {
   );
 };
 
-// Split components to separete files
+// add animation to section switch
 // Add server subm mock
 // Send email
 
