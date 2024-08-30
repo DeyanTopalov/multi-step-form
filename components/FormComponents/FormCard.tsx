@@ -461,7 +461,6 @@ export const FormCard = () => {
   );
 };
 
-// add animation to section switch
 // Add server subm mock
 // Send email
 
