@@ -47,3 +47,15 @@ export const NavBgDesktop = () => {
     />
   );
 };
+
+export const FavIcon = () => {
+  return (
+    <Image
+      src="/favicon-32x32.png"
+      width={32}
+      height={32}
+      alt="logo"
+      className="h-full w-full object-cover"
+    />
+  );
+};
