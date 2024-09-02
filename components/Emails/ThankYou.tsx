@@ -12,6 +12,7 @@ import {
   Column,
 } from "@react-email/components";
 import * as React from "react";
+import { ExternalLink } from "lucide-react";
 
 export default function ThankYou() {
   return (
@@ -27,15 +28,17 @@ export default function ThankYou() {
                 alt="logo"
                 width="32"
                 height="32"
+                className="rounded-full"
               />
-              <Img src="favicon-frm.png" alt="logo2" width="32" height="32" />
-              <Heading className="text-center text-2xl font-bold text-blue-950">
+              {/* <ExternalLink /> */}
+              {/* <Img src="favicon-frm.png" alt="logo2" width="32" height="32" /> */}
+              <Heading className="text-center text-xl font-bold text-blue-950">
                 Hi there, [Name]
               </Heading>
               <Hr />
             </Section>
             <Section className="w-full text-left">
-              <Text className="mb-[20px] text-xl font-medium text-blue-950">
+              <Text className="mb-[20px] text-lg font-medium text-blue-950">
                 Note: This is a test email reply for a Frontend Mentor
                 challenge.
               </Text>

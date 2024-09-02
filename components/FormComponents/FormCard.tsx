@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormSchema, formSchema } from "../../lib/schema";
+// import ThankYou from "@components/Emails/ThankYou";
 
 export const FormCard = () => {
   const defaultPlan = { name: "Arcade", price: 9 };
@@ -119,10 +120,34 @@ export const FormCard = () => {
     setCurrentStep(1);
   };
 
-  const onSubmit = (data: TFormSchema) => {
-    console.log("form data is: ", data);
-    reset();
-    setFormCompleted(true);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const onSubmit = async (data: TFormSchema) => {
+    // console.log("form data is: ", data);
+    // reset();
+    // setFormCompleted(true);
+    try {
+      const response = await fetch("/api/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send email");
+      }
+
+      console.log("form data is: ", data);
+      reset();
+      setFormCompleted(true);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setSubmitError(
+        "An error occurred while sending the email. Please try again.",
+      );
+    }
   };
 
   return (
@@ -135,7 +160,7 @@ export const FormCard = () => {
         >
           {/* Step 1 */}
           {currentStep === 1 && (
-            <section className="animate-fadein mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
+            <section className="mx-4 grid -translate-y-[4.5rem] animate-fadein rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
               <div className="mb-6 grid gap-3">
                 <h1 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                   {steps[currentStep - 1].title}
@@ -230,7 +255,7 @@ export const FormCard = () => {
 
           {/* Step 2 */}
           {currentStep === 2 && (
-            <section className="animate-fadein mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
+            <section className="mx-4 grid -translate-y-[4.5rem] animate-fadein rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
               <div className="mb-6 grid gap-3">
                 <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                   {steps[currentStep - 1].title}
@@ -310,7 +335,7 @@ export const FormCard = () => {
 
           {/* Step 3 */}
           {currentStep === 3 && (
-            <section className="animate-fadein mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
+            <section className="mx-4 grid -translate-y-[4.5rem] animate-fadein rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
               <div className="mb-6 grid gap-3">
                 <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                   {steps[currentStep - 1].title}
@@ -362,7 +387,7 @@ export const FormCard = () => {
           )}
           {/* Step 4 */}
           {currentStep === 4 && (
-            <section className="animate-fadein mx-4 grid -translate-y-[4.5rem] rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
+            <section className="mx-4 grid -translate-y-[4.5rem] animate-fadein rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
               <div className="mb-6 grid gap-3">
                 <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
                   {steps[currentStep - 1].title}
