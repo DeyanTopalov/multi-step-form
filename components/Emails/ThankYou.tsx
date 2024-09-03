@@ -11,6 +11,8 @@ import {
   Row,
   Column,
   Button,
+  Head,
+  Preview,
 } from "@react-email/components";
 import * as React from "react";
 import { TFormSchema } from "@lib/schema";
@@ -21,39 +23,41 @@ type EmailProps = Pick<
   "name" | "billingPlan" | "billingCycle" | "selectedAddons"
 >;
 
-const defaultValues: TFormSchema = {
-  name: "John Doe",
-  email: "john.doe@example.com",
-  phoneNumber: "+1234567890",
-  billingPlan: { name: "Arcade", price: 9 },
-  billingCycle: "monthly",
-  selectedAddons: [
-    { title: "Online service", price: 1 },
-    { title: "Larger storage", price: 2 },
-  ],
-};
+//default values for testing
+// const defaultValues: TFormSchema = {
+//   name: "John Doe",
+//   email: "john.doe@example.com",
+//   phoneNumber: "+1234567890",
+//   billingPlan: { name: "Arcade", price: 9 },
+//   billingCycle: "monthly",
+//   selectedAddons: [
+//     { title: "Online service", price: 1 },
+//     { title: "Larger storage", price: 2 },
+//   ],
+// };
 
-// export default function ThankYou({
-//   name,
-//   billingPlan,
-//   billingCycle,
-//   selectedAddons,
-// }: EmailProps) {
-//   const priceTag = getPriceTag(billingCycle);
-
-export default function ThankYou(props: EmailProps) {
-  // Merge default props with provided props
-  const { name, billingPlan, billingCycle, selectedAddons } = {
-    ...defaultValues,
-    ...props,
-  };
+export default function ThankYou({
+  name,
+  billingPlan,
+  billingCycle,
+  selectedAddons,
+}: EmailProps) {
+  //default values for testing
+  // export default function ThankYou(props: EmailProps) {
+  //   // Merge default props with provided props
+  //   const { name, billingPlan, billingCycle, selectedAddons } = {
+  //     ...defaultValues,
+  //     ...props,
+  //   };
 
   const priceTag = getPriceTag(billingCycle);
 
   return (
     <Html>
+      <Head />
+      <Preview>Hi there, {name}</Preview>
       <Tailwind>
-        <Body className="h-svh w-svw bg-slate-100 px-[6px] py-[10px]">
+        <Body className="mx-auto h-svh w-svw bg-slate-100 px-[6px]">
           <Container className="h-full w-full rounded-lg bg-white px-[16px] py-[16px] drop-shadow-lg">
             <Section className="mb-[20px]">
               {/* add the image from the local files */}
@@ -95,7 +99,7 @@ export default function ThankYou(props: EmailProps) {
               <Hr />
               <Section className="w-full">
                 {selectedAddons?.map((addon) => (
-                  <Row className="mb-[6px] w-full">
+                  <Row className="mb-[6px] w-full" key={addon.title}>
                     <Column className="w-1/2 text-sm text-slate-500">
                       {addon.title}
                     </Column>
@@ -121,15 +125,16 @@ export default function ThankYou(props: EmailProps) {
                 ) + priceTag}
               </Column>
             </Row>
-            <Section className="mt-[20px] flex w-full items-center justify-center">
-              <Button
-                className="cursor-pointer rounded-lg bg-blue-950 px-4 py-2 text-white hover:bg-blue-800"
-                href="https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ"
-              >
-                Visit challenge
-              </Button>
-            </Section>
-
+            <Row className="mt-[20px] w-full">
+              <Column align="center">
+                <Button
+                  className="m-auto cursor-pointer rounded-lg bg-blue-950 px-4 py-2 text-white"
+                  href="https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ"
+                >
+                  Visit challenge
+                </Button>
+              </Column>
+            </Row>
             <Section className="mt-[40px]">
               <Text className="text-base font-normal text-slate-500">
                 Thank you for your time & Happy coding!
@@ -141,7 +146,3 @@ export default function ThankYou(props: EmailProps) {
     </Html>
   );
 }
-
-// add the dynamic price and addons
-// add buttons with link to the challenge
-// delete default values

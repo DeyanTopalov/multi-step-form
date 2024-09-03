@@ -20,7 +20,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormSchema, formSchema } from "../../lib/schema";
-// import ThankYou from "@components/Emails/ThankYou";
 
 export const FormCard = () => {
   const defaultPlan = { name: "Arcade", price: 9 };
@@ -480,7 +479,7 @@ export const FormCard = () => {
             </Button>
             <Button
               type="submit"
-              className={` ${currentStep < 4 ? "hidden" : "block"} cursor-pointer rounded-lg bg-clr-purplish-blue px-6 py-2 font-medium hover:bg-clr-purplish-blue/75 disabled:bg-red-600 md:px-8`}
+              className={` ${currentStep < 4 ? "hidden" : "block"} cursor-pointer rounded-lg bg-clr-purplish-blue px-6 py-2 font-medium hover:bg-clr-purplish-blue/75 disabled:bg-clr-strawberry md:px-8`}
               disabled={isSubmitting}
             >
               {isSubmitting ? "Submitting..." : "Confirm"}
