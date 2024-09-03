@@ -10,11 +10,11 @@ import {
   Hr,
   Row,
   Column,
+  Button,
 } from "@react-email/components";
 import * as React from "react";
-import { ExternalLink } from "lucide-react";
 import { TFormSchema } from "@lib/schema";
-import { getPriceTag } from "@lib/utils";
+import { getPriceTag, formatCurrency, sum } from "@lib/utils";
 
 type EmailProps = Pick<
   TFormSchema,
@@ -88,39 +88,48 @@ export default function ThankYou(props: EmailProps) {
                     {billingPlan.name} ({billingCycle})
                   </Column>
                   <Column className="w-1/2 text-right text-base text-blue-950">
-                    $9/mo
+                    {formatCurrency(billingPlan.price) + priceTag}
                   </Column>
                 </Row>
               </Section>
               <Hr />
               <Section className="w-full">
-                <Row className="mb-[6px] w-full">
-                  <Column className="w-1/2 text-sm text-slate-500">
-                    Online service
-                  </Column>
-                  <Column className="w-1/2 text-right text-sm text-slate-500">
-                    +$1/mo
-                  </Column>
-                </Row>
-
-                <Row className="mb-[6px] w-full">
-                  <Column className="w-1/2 text-sm text-slate-500">
-                    Larger storage
-                  </Column>
-                  <Column className="w-1/2 text-right text-sm text-slate-500">
-                    +$2/mo
-                  </Column>
-                </Row>
+                {selectedAddons?.map((addon) => (
+                  <Row className="mb-[6px] w-full">
+                    <Column className="w-1/2 text-sm text-slate-500">
+                      {addon.title}
+                    </Column>
+                    <Column className="w-1/2 text-right text-sm text-slate-500">
+                      {"+" + formatCurrency(addon.price) + priceTag}
+                    </Column>
+                  </Row>
+                ))}
               </Section>
             </Section>
             <Row className="mb-[6px] w-full px-[10px]">
               <Column className="w-1/2 text-sm text-slate-500">
-                Total (per month)
+                {billingCycle === "monthly"
+                  ? "Total (per month)"
+                  : "Total (per year)"}
               </Column>
               <Column className="w-1/2 text-right text-base font-bold text-blue-800">
-                $12/mo
+                {formatCurrency(
+                  sum(
+                    billingPlan.price,
+                    ...(selectedAddons?.map((addon) => addon.price) || []),
+                  ),
+                ) + priceTag}
               </Column>
             </Row>
+            <Section className="mt-[20px] flex w-full items-center justify-center">
+              <Button
+                className="cursor-pointer rounded-lg bg-blue-950 px-4 py-2 text-white hover:bg-blue-800"
+                href="https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ"
+              >
+                Visit challenge
+              </Button>
+            </Section>
+
             <Section className="mt-[40px]">
               <Text className="text-base font-normal text-slate-500">
                 Thank you for your time & Happy coding!

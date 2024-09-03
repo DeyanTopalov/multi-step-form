@@ -6,38 +6,12 @@ import { z } from "zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Default values for testing
-// const defaultValues: TFormSchema = {
-//   name: "John Doe",
-//   email: "john.doe@example.com",
-//   phoneNumber: "+1234567890",
-//   billingPlan: { name: "Arcade", price: 9 },
-//   billingCycle: "monthly",
-//   selectedAddons: [
-//     { title: "Online service", price: 1 },
-//     { title: "Larger storage", price: 2 },
-//   ],
-// };
-
 export async function POST(request: Request) {
   try {
     const body = await request.json();
 
     // Validate the incoming data using the existing schema
     const validatedData = formSchema.parse(body);
-
-    //for testing
-    // const mergedData = formSchema.parse(defaultValues);
-
-    //for testing
-    // const {
-    //   name,
-    //   email,
-    //   phoneNumber,
-    //   billingPlan,
-    //   billingCycle,
-    //   selectedAddons,
-    // } = mergedData;
 
     const {
       name,

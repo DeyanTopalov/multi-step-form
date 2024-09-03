@@ -499,8 +499,6 @@ export const FormCard = () => {
   );
 };
 
-// Add server subm mock
-// Send email
 // add sep components for each section
 // check the thingy with the next config
 
