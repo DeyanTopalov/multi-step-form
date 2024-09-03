@@ -8,7 +8,14 @@ import { Checkbox } from "../ui/checkbox";
 import { Switch } from "../ui/switch";
 import FormSuccessScreen from "./FormSuccessScreen";
 import FormNav from "./FormNav";
-import { steps, plans, addons, formatCurrency, sum } from "../../lib/utils";
+import {
+  steps,
+  plans,
+  addons,
+  formatCurrency,
+  sum,
+  getPriceTag,
+} from "../../lib/utils";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +25,7 @@ import { TFormSchema, formSchema } from "../../lib/schema";
 export const FormCard = () => {
   const defaultPlan = { name: "Arcade", price: 9 };
   const defaultBillingCycle = "monthly";
+
   const {
     register,
     trigger,
@@ -113,7 +121,9 @@ export const FormCard = () => {
     setValue("selectedAddons", updatedAddons);
   };
 
-  const priceTag = billingCycle === "monthly" ? "/mo" : "/yr";
+  // const priceTag = billingCycle === "monthly" ? "/mo" : "/yr";
+
+  const priceTag = getPriceTag(billingCycle);
 
   const handleClose = () => {
     setFormCompleted(false);
@@ -473,8 +483,11 @@ export const FormCard = () => {
               className={` ${currentStep < 4 ? "hidden" : "block"} cursor-pointer rounded-lg bg-clr-purplish-blue px-6 py-2 font-medium hover:bg-clr-purplish-blue/75 disabled:bg-red-600 md:px-8`}
               disabled={isSubmitting}
             >
-              Confirm
+              {isSubmitting ? "Submitting..." : "Confirm"}
             </Button>
+            {submitError && (
+              <p className="mt-2 text-sm text-clr-strawberry">{submitError}</p>
+            )}
           </div>
         </form>
       )}
@@ -488,5 +501,7 @@ export const FormCard = () => {
 
 // Add server subm mock
 // Send email
+// add sep components for each section
+// check the thingy with the next config
 
 // test

@@ -98,3 +98,7 @@ export const sum = (...args: (string | number)[]): number => {
     return isNaN(num) ? acc : acc + num;
   }, 0);
 };
+
+export function getPriceTag(billingCycle: "monthly" | "yearly"): string {
+  return billingCycle === "monthly" ? "/mo" : "/yr";
+}

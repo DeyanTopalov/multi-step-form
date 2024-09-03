@@ -13,8 +13,43 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 import { ExternalLink } from "lucide-react";
+import { TFormSchema } from "@lib/schema";
+import { getPriceTag } from "@lib/utils";
 
-export default function ThankYou() {
+type EmailProps = Pick<
+  TFormSchema,
+  "name" | "billingPlan" | "billingCycle" | "selectedAddons"
+>;
+
+const defaultValues: TFormSchema = {
+  name: "John Doe",
+  email: "john.doe@example.com",
+  phoneNumber: "+1234567890",
+  billingPlan: { name: "Arcade", price: 9 },
+  billingCycle: "monthly",
+  selectedAddons: [
+    { title: "Online service", price: 1 },
+    { title: "Larger storage", price: 2 },
+  ],
+};
+
+// export default function ThankYou({
+//   name,
+//   billingPlan,
+//   billingCycle,
+//   selectedAddons,
+// }: EmailProps) {
+//   const priceTag = getPriceTag(billingCycle);
+
+export default function ThankYou(props: EmailProps) {
+  // Merge default props with provided props
+  const { name, billingPlan, billingCycle, selectedAddons } = {
+    ...defaultValues,
+    ...props,
+  };
+
+  const priceTag = getPriceTag(billingCycle);
+
   return (
     <Html>
       <Tailwind>
@@ -33,7 +68,7 @@ export default function ThankYou() {
               {/* <ExternalLink /> */}
               {/* <Img src="favicon-frm.png" alt="logo2" width="32" height="32" /> */}
               <Heading className="text-center text-xl font-bold text-blue-950">
-                Hi there, [Name]
+                Hi there, {name}
               </Heading>
               <Hr />
             </Section>
@@ -50,7 +85,7 @@ export default function ThankYou() {
               <Section className="w-full">
                 <Row className="w-full">
                   <Column className="w-1/2 text-base text-blue-950">
-                    Arcade (Monthly)
+                    {billingPlan.name} ({billingCycle})
                   </Column>
                   <Column className="w-1/2 text-right text-base text-blue-950">
                     $9/mo
@@ -97,3 +132,7 @@ export default function ThankYou() {
     </Html>
   );
 }
+
+// add the dynamic price and addons
+// add buttons with link to the challenge
+// delete default values
