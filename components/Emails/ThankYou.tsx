@@ -23,54 +23,54 @@ type EmailProps = Pick<
   "name" | "billingPlan" | "billingCycle" | "selectedAddons"
 >;
 
+// default values for testing
+const defaultValues: TFormSchema = {
+  name: "John Doe",
+  email: "john.doe@example.com",
+  phoneNumber: "+1234567890",
+  billingPlan: { name: "Arcade", price: 9 },
+  billingCycle: "monthly",
+  selectedAddons: [
+    { title: "Online service", price: 1 },
+    { title: "Larger storage", price: 2 },
+  ],
+};
+
 //default values for testing
-// const defaultValues: TFormSchema = {
-//   name: "John Doe",
-//   email: "john.doe@example.com",
-//   phoneNumber: "+1234567890",
-//   billingPlan: { name: "Arcade", price: 9 },
-//   billingCycle: "monthly",
-//   selectedAddons: [
-//     { title: "Online service", price: 1 },
-//     { title: "Larger storage", price: 2 },
-//   ],
-// };
+export default function ThankYou(props: EmailProps) {
+  // Merge default props with provided props
+  const { name, billingPlan, billingCycle, selectedAddons } = {
+    ...defaultValues,
+    ...props,
+  };
 
-export default function ThankYou({
-  name,
-  billingPlan,
-  billingCycle,
-  selectedAddons,
-}: EmailProps) {
-  //default values for testing
-  // export default function ThankYou(props: EmailProps) {
-  //   // Merge default props with provided props
-  //   const { name, billingPlan, billingCycle, selectedAddons } = {
-  //     ...defaultValues,
-  //     ...props,
-  //   };
-
+  // export default function ThankYou({
+  //   name,
+  //   billingPlan,
+  //   billingCycle,
+  //   selectedAddons,
+  // }: EmailProps) {
   const priceTag = getPriceTag(billingCycle);
+
+  const logoURL = "https://i.ibb.co/8Xvrv6b/favicon-32x32.png";
+  const challengeURL =
+    "https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ";
 
   return (
     <Html>
       <Head />
       <Preview>Hi there, {name}</Preview>
       <Tailwind>
-        <Body className="mx-auto h-svh w-svw bg-slate-100 px-[6px]">
+        <Body className="mx-auto h-auto w-svw bg-slate-100 px-[6px] py-[16px]">
           <Container className="h-full w-full rounded-lg bg-white px-[16px] py-[16px] drop-shadow-lg">
             <Section className="mb-[20px]">
-              {/* add the image from the local files */}
               <Img
-                // src="https://avatars.githubusercontent.com/u/47932038?s=280&v=4"
-                src="https://cdn.brandfetch.io/id-7PJzcYu/w/240/h/240/theme/dark/icon.jpeg?k=id64Mup7ac&t=1724851273951?t=1724851273951"
+                src={logoURL}
                 alt="logo"
                 width="32"
                 height="32"
                 className="rounded-full"
               />
-              {/* <ExternalLink /> */}
-              {/* <Img src="favicon-frm.png" alt="logo2" width="32" height="32" /> */}
               <Heading className="text-center text-xl font-bold text-blue-950">
                 Hi there, {name}
               </Heading>
@@ -129,7 +129,7 @@ export default function ThankYou({
               <Column align="center">
                 <Button
                   className="m-auto cursor-pointer rounded-lg bg-blue-950 px-4 py-2 text-white"
-                  href="https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ"
+                  href={challengeURL}
                 >
                   Visit challenge
                 </Button>

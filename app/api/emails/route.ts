@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     // Validate the incoming data using the existing schema
-    const validatedData = formSchema.parse(body);
+    const validatedData: TFormSchema = formSchema.parse(body);
 
     const {
       name,
@@ -25,8 +25,13 @@ export async function POST(request: Request) {
     const { data, error } = await resend.emails.send({
       from: "multi-step-form@testingstuff.website",
       to: [email],
-      subject: "Test Email",
-      react: ThankYou({ name, billingPlan, billingCycle, selectedAddons }),
+      subject: "Demo Email",
+      react: ThankYou({
+        name,
+        billingPlan,
+        billingCycle,
+        selectedAddons,
+      }),
     });
 
     if (error) {
