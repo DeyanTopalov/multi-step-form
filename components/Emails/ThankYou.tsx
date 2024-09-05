@@ -23,7 +23,7 @@ type EmailProps = Pick<
   "name" | "billingPlan" | "billingCycle" | "selectedAddons"
 >;
 
-// default values for testing
+//! default values for testing
 const defaultValues: TFormSchema = {
   name: "John Doe",
   email: "john.doe@example.com",
@@ -36,7 +36,7 @@ const defaultValues: TFormSchema = {
   ],
 };
 
-//default values for testing
+//! default values for testing
 export default function ThankYou(props: EmailProps) {
   // Merge default props with provided props
   const { name, billingPlan, billingCycle, selectedAddons } = {

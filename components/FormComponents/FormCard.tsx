@@ -45,6 +45,7 @@ export const FormCard = () => {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [formCompleted, setFormCompleted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const selectedPlan = watch("billingPlan", { name: "Arcade", price: 9 });
   const billingCycle = watch("billingCycle", "monthly");
@@ -120,8 +121,6 @@ export const FormCard = () => {
     setValue("selectedAddons", updatedAddons);
   };
 
-  // const priceTag = billingCycle === "monthly" ? "/mo" : "/yr";
-
   const priceTag = getPriceTag(billingCycle);
 
   const handleClose = () => {
@@ -129,12 +128,7 @@ export const FormCard = () => {
     setCurrentStep(1);
   };
 
-  const [submitError, setSubmitError] = useState<string | null>(null);
-
   const onSubmit = async (data: TFormSchema) => {
-    // console.log("form data is: ", data);
-    // reset();
-    // setFormCompleted(true);
     try {
       const response = await fetch("/api/emails", {
         method: "POST",
@@ -147,8 +141,6 @@ export const FormCard = () => {
       if (!response.ok) {
         throw new Error("Failed to send email");
       }
-
-      console.log("form data is: ", data);
       reset();
       setFormCompleted(true);
     } catch (error) {
@@ -164,7 +156,7 @@ export const FormCard = () => {
       <FormNav currentStep={currentStep} />
       {formCompleted === false && (
         <form
-          className="md:transparent mb-10 md:relative md:mb-0 md:w-full md:max-w-[28.125rem]"
+          className="mb-10 md:relative md:mb-0 md:w-full md:max-w-[28.125rem] md:bg-transparent"
           onSubmit={handleSubmit(onSubmit)}
         >
           {/* Step 1 */}
@@ -460,7 +452,7 @@ export const FormCard = () => {
               </p>
             </section>
           )}
-          <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 md:w-full md:max-w-[28.125rem] md:bg-transparent">
+          <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 md:w-full md:max-w-[28.125rem] md:bg-transparent md:px-0">
             <Button
               onClick={handlePrevStep}
               type="button"
@@ -479,7 +471,7 @@ export const FormCard = () => {
             </Button>
             <Button
               type="submit"
-              className={` ${currentStep < 4 ? "hidden" : "block"} cursor-pointer rounded-lg bg-clr-purplish-blue px-6 py-2 font-medium hover:bg-clr-purplish-blue/75 disabled:bg-clr-strawberry md:px-8`}
+              className={` ${currentStep < 4 ? "hidden" : "block"} cursor-pointer rounded-lg bg-clr-purplish-blue px-6 py-2 font-medium hover:bg-clr-purplish-blue/75 disabled:bg-clr-purplish-blue/75 md:px-8`}
               disabled={isSubmitting}
             >
               {isSubmitting ? "Submitting..." : "Confirm"}
@@ -499,6 +491,5 @@ export const FormCard = () => {
 };
 
 // add sep components for each section
-// check the thingy with the next config
 
 // test
