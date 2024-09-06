@@ -3,6 +3,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useFormContext } from "react-hook-form";
 
+// Step 1
 const FormStepPersonalInfo = () => {
   const {
     register,
@@ -11,14 +12,6 @@ const FormStepPersonalInfo = () => {
 
   return (
     <>
-      {/* <div className="mb-6 grid gap-3">
-        <h1 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
-          {steps[currentStep - 1].title}
-        </h1>
-        <p className="text-clr-cool-gray">
-          {steps[currentStep - 1].description}
-        </p>
-      </div> */}
       <div>
         <Label
           htmlFor="name"
