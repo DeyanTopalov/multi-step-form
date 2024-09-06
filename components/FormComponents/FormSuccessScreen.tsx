@@ -6,7 +6,7 @@ type FormSuccessScreenProps = {
 };
 const FormSuccessScreen = ({ handleClose }: FormSuccessScreenProps) => {
   return (
-    <section className="animate-fadein mx-4 grid -translate-y-[4.5rem] place-items-center rounded-lg bg-white px-6 py-8 text-center drop-shadow-lg md:mx-0 md:max-w-[28.125rem] md:translate-y-0 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
+    <section className="mx-4 grid -translate-y-[4.5rem] animate-fadein place-items-center rounded-lg bg-white px-6 py-8 text-center drop-shadow-lg md:mx-0 md:max-w-[28.125rem] md:translate-y-0 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
       <div className="icon_and_thanks mt-12 flex flex-col items-center gap-6 md:mt-32 md:gap-8">
         <div className="icon flex size-[3.5rem] items-center justify-center rounded-full bg-clr-strawberry/75 md:size-20">
           <div className="flex size-8 items-center justify-center rounded-full bg-white md:size-11">

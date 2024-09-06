@@ -1,6 +1,6 @@
-import { TFormSchema } from "@lib/schema";
 import { Label } from "../ui/label";
 import { Checkbox } from "@components/ui/checkbox";
+import { TFormSchema } from "@lib/schema";
 import { useFormContext } from "react-hook-form";
 import { addons, formatCurrency } from "@lib/utils";
 
@@ -15,8 +15,7 @@ const FormStepAddonsSelect = ({
   selectedAddons,
   priceTag,
 }: FormStepAddonsSelectProps) => {
-  const { register, setValue, getValues, watch } =
-    useFormContext<TFormSchema>();
+  const { register, setValue, getValues } = useFormContext<TFormSchema>();
 
   const handleAddonChange = (addon: (typeof addons)[0]) => {
     const currentAddons = getValues("selectedAddons") ?? [];

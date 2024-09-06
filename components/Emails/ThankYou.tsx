@@ -24,32 +24,32 @@ type EmailProps = Pick<
 >;
 
 //! default values for testing
-const defaultValues: TFormSchema = {
-  name: "John Doe",
-  email: "john.doe@example.com",
-  phoneNumber: "+1234567890",
-  billingPlan: { name: "Arcade", price: 9 },
-  billingCycle: "monthly",
-  selectedAddons: [
-    { title: "Online service", price: 1 },
-    { title: "Larger storage", price: 2 },
-  ],
-};
+// const defaultValues: TFormSchema = {
+//   name: "John Doe",
+//   email: "john.doe@example.com",
+//   phoneNumber: "+1234567890",
+//   billingPlan: { name: "Arcade", price: 9 },
+//   billingCycle: "monthly",
+//   selectedAddons: [
+//     { title: "Online service", price: 1 },
+//     { title: "Larger storage", price: 2 },
+//   ],
+// };
 
 //! default values for testing
-export default function ThankYou(props: EmailProps) {
-  // Merge default props with provided props
-  const { name, billingPlan, billingCycle, selectedAddons } = {
-    ...defaultValues,
-    ...props,
-  };
+// export default function ThankYou(props: EmailProps) {
+//   // Merge default props with provided props
+//   const { name, billingPlan, billingCycle, selectedAddons } = {
+//     ...defaultValues,
+//     ...props,
+//   };
 
-  // export default function ThankYou({
-  //   name,
-  //   billingPlan,
-  //   billingCycle,
-  //   selectedAddons,
-  // }: EmailProps) {
+export default function ThankYou({
+  name,
+  billingPlan,
+  billingCycle,
+  selectedAddons,
+}: EmailProps) {
   const priceTag = getPriceTag(billingCycle);
 
   const logoURL = "https://i.ibb.co/8Xvrv6b/favicon-32x32.png";

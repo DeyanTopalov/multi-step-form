@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import ThankYou from "@components/Emails/ThankYou";
 import { formSchema, TFormSchema } from "@lib/schema";
 import { z } from "zod";
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

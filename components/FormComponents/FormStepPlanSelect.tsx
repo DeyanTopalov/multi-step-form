@@ -1,8 +1,8 @@
-import { TFormSchema } from "@lib/schema";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Switch } from "@components/ui/switch";
 import Image from "next/image";
+import { TFormSchema } from "@lib/schema";
 import { useFormContext } from "react-hook-form";
 import { plans, formatCurrency } from "@lib/utils";
 

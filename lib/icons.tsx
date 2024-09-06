@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { CircleCheck } from "lucide-react";
 
 // Buggy Nextjs img, not conditionally rednering based on screen size
 export const NavBackground = () => {

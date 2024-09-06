@@ -1,27 +1,21 @@
-import { TFormSchema } from "@lib/schema";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Switch } from "@components/ui/switch";
 import { Button } from "@components/ui/button";
-import Image from "next/image";
+import { TFormSchema } from "@lib/schema";
 import { useFormContext } from "react-hook-form";
-import { plans, formatCurrency, sum } from "@lib/utils";
+import { formatCurrency, sum } from "@lib/utils";
 
 type FormStepFinishingUpProps = {
   priceTag: string;
   setCurrentStep: (value: number) => void;
 } & Pick<TFormSchema, "billingCycle" | "selectedAddons">;
 
-// setCurrentStep: (value: SetStateAction<number>) => void
-
+// Step 4
 const FormStepFinishingUp = ({
   billingCycle,
-  //   selectedAddons,
   priceTag,
   setCurrentStep,
 }: FormStepFinishingUpProps) => {
-  const { register, setValue, getValues, watch } =
-    useFormContext<TFormSchema>();
+  const { getValues } = useFormContext<TFormSchema>();
+
   return (
     <>
       <div className="wrapper grid w-full rounded-lg bg-clr-alabaster px-4 py-4 md:px-6">

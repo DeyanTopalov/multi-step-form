@@ -1,6 +1,6 @@
-import { TFormSchema } from "@lib/schema";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { TFormSchema } from "@lib/schema";
 import { useFormContext } from "react-hook-form";
 
 // Step 1

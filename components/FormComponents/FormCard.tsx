@@ -28,10 +28,7 @@ export const FormCard = () => {
   });
 
   const {
-    register,
     trigger,
-    getValues,
-    setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
@@ -113,75 +110,41 @@ export const FormCard = () => {
             className="mb-10 md:relative md:mb-0 md:w-full md:max-w-[28.125rem] md:bg-transparent"
             onSubmit={handleSubmit(onSubmit)}
           >
-            {/* Step 1 */}
-            {currentStep === 1 && (
-              <section className="mx-4 grid -translate-y-[4.5rem] animate-fadein rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
-                <div className="mb-6 grid gap-3">
-                  <h1 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
-                    {steps[currentStep - 1].title}
-                  </h1>
-                  <p className="text-clr-cool-gray">
-                    {steps[currentStep - 1].description}
-                  </p>
-                </div>
-                <FormStepPersonalInfo />
-              </section>
-            )}
-
-            {/* Step 2 */}
-            {currentStep === 2 && (
-              <section className="mx-4 grid -translate-y-[4.5rem] animate-fadein rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
-                <div className="mb-6 grid gap-3">
-                  <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
-                    {steps[currentStep - 1].title}
-                  </h2>
-                  <p className="text-clr-cool-gray">
-                    {steps[currentStep - 1].description}
-                  </p>
-                </div>
+            <section
+              key={currentStep}
+              className="mx-4 grid -translate-y-[4.5rem] animate-fadein rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none"
+            >
+              <div className="mb-6 grid gap-3">
+                <h1 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
+                  {steps[currentStep - 1].title}
+                </h1>
+                <p className="text-clr-cool-gray">
+                  {steps[currentStep - 1].description}
+                </p>
+              </div>
+              {currentStep === 1 && <FormStepPersonalInfo />}
+              {currentStep === 2 && (
                 <FormStepPlanSelect
                   billingCycle={billingCycle}
                   priceTag={priceTag}
                 />
-              </section>
-            )}
-
-            {/* Step 3 */}
-            {currentStep === 3 && (
-              <section className="mx-4 grid -translate-y-[4.5rem] animate-fadein rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
-                <div className="mb-6 grid gap-3">
-                  <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
-                    {steps[currentStep - 1].title}
-                  </h2>
-                  <p className="text-clr-cool-gray">
-                    {steps[currentStep - 1].description}
-                  </p>
-                </div>
+              )}
+              {currentStep === 3 && (
                 <FormStepAddonsSelect
                   billingCycle={billingCycle}
                   selectedAddons={selectedAddons}
                   priceTag={priceTag}
                 />
-              </section>
-            )}
-            {/* Step 4 */}
-            {currentStep === 4 && (
-              <section className="mx-4 grid -translate-y-[4.5rem] animate-fadein rounded-lg bg-white px-6 py-8 drop-shadow-lg md:mx-0 md:translate-y-10 md:bg-transparent md:px-0 md:py-0 md:drop-shadow-none">
-                <div className="mb-6 grid gap-3">
-                  <h2 className="text-2xl font-bold text-clr-marine-blue md:text-[2rem]">
-                    {steps[currentStep - 1].title}
-                  </h2>
-                  <p className="text-clr-cool-gray">
-                    {steps[currentStep - 1].description}
-                  </p>
-                </div>
+              )}
+              {currentStep === 4 && (
                 <FormStepFinishingUp
                   billingCycle={billingCycle}
                   priceTag={priceTag}
                   setCurrentStep={setCurrentStep}
                 />
-              </section>
-            )}
+              )}
+            </section>
+            {/* Buttons navigation */}
             <div className="absolute bottom-0 flex h-[4.5rem] w-full items-center justify-between bg-white px-4 md:w-full md:max-w-[28.125rem] md:bg-transparent md:px-0">
               <Button
                 onClick={handlePrevStep}
@@ -222,7 +185,3 @@ export const FormCard = () => {
     </div>
   );
 };
-
-// add sep components for each section
-
-// test
