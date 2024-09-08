@@ -172,7 +172,7 @@ export const FormCard = () => {
                 type="submit"
                 className={` ${currentStep < 4 ? "hidden" : "block"} cursor-pointer rounded-lg bg-clr-purplish-blue px-6 py-2 font-medium hover:bg-clr-purplish-blue/75 disabled:bg-clr-purplish-blue/75 md:px-8`}
                 // added additional check for last step in order to protect against accidental form submission
-                disabled={isSubmitting || currentStep < 4}
+                disabled={isSubmitting || currentStep < steps.length - 1}
               >
                 {isSubmitting ? "Submitting..." : "Confirm"}
               </Button>
