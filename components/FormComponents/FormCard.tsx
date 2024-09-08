@@ -79,25 +79,31 @@ export const FormCard = () => {
   };
 
   const onSubmit = async (data: TFormSchema) => {
-    try {
-      const response = await fetch("/api/emails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+    // adding additional check for submission in order to protect against accidental form submission
+    if (currentStep < steps.length - 1) {
+      setCurrentStep((prevStep) => prevStep + 1);
+      return;
+    } else {
+      try {
+        const response = await fetch("/api/emails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
 
-      if (!response.ok) {
-        throw new Error("Failed to send email");
+        if (!response.ok) {
+          throw new Error("Failed to send email");
+        }
+        reset();
+        setFormCompleted(true);
+      } catch (error) {
+        console.error("Error sending email:", error);
+        setSubmitError(
+          "An error occurred while sending the email. Please try again.",
+        );
       }
-      reset();
-      setFormCompleted(true);
-    } catch (error) {
-      console.error("Error sending email:", error);
-      setSubmitError(
-        "An error occurred while sending the email. Please try again.",
-      );
     }
   };
 
@@ -165,7 +171,8 @@ export const FormCard = () => {
               <Button
                 type="submit"
                 className={` ${currentStep < 4 ? "hidden" : "block"} cursor-pointer rounded-lg bg-clr-purplish-blue px-6 py-2 font-medium hover:bg-clr-purplish-blue/75 disabled:bg-clr-purplish-blue/75 md:px-8`}
-                disabled={isSubmitting}
+                // added additional check for last step in order to protect against accidental form submission
+                disabled={isSubmitting || currentStep < 4}
               >
                 {isSubmitting ? "Submitting..." : "Confirm"}
               </Button>
