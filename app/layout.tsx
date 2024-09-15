@@ -3,7 +3,7 @@ import { ubuntu } from "./ui/fonts";
 import "@styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "Contact Form",
+  title: "Multi-Step-Form",
   description: "Frontend Mentor challenge to build a Multi-Step-Form",
 };
 
